@@ -32,9 +32,6 @@
         .grid { display: grid; grid-template-columns: repeat(5, 52px); gap: 8px; justify-content: center; margin-top: 15px; padding: 10px; background: rgba(0,0,0,0.5); border-radius: 15px; }
         .cell { width: 52px; height: 52px; background: #0a1a2a; border: 1px solid #1a3a5a; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; transition: 0.3s; position: relative; }
         
-        /* Cell loading spinner styling */
-        .cell-spinner { width: 22px; height: 22px; border: 3px solid #111; border-top: 3px solid var(--blue); border-radius: 50%; animation: spin 0.8s linear infinite; }
-        
         .loader-box { background: #000000 !important; border: 2px solid var(--blue) !important; box-shadow: 0 0 20px rgba(0, 212, 255, 0.5) !important; }
         .spin-circle { width: 55px; height: 55px; border: 5px solid #111; border-top: 5px solid var(--blue); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 20px; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
@@ -42,6 +39,19 @@
         .progress-bar { width: 100%; height: 4px; background: #111; border-radius: 2px; margin-top: 15px; position: relative; overflow: hidden; }
         .progress-line { position: absolute; height: 100%; width: 40%; background: var(--blue); animation: loadMove 2s infinite linear; }
         @keyframes loadMove { from { left: -40%; } to { left: 100%; } }
+
+        /* نافذة الفحص المؤقتة في منتصف الشاشة */
+        #cell-scanner-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(0, 0, 0, 0.85);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            backdrop-filter: blur(5px);
+        }
 
         .hidden { display: none !important; }
         #music-ctrl { position: absolute; bottom: 20px; right: 20px; background: none; border: 1px solid var(--gold); color: var(--gold); border-radius: 50%; width: 40px; height: 40px; cursor: pointer; z-index: 20; }
@@ -56,6 +66,14 @@
 
     <div class="status-bar">
         <div class="status-text">SYSTEM ONLINE... SCANNING GRID V3... NEXT ROUND READY... AI-MINES ACTIVE...</div>
+    </div>
+
+    <!-- نافذة التحميل عند فحص الخانة في منتصف الشاشة -->
+    <div id="cell-scanner-overlay" class="hidden">
+        <div class="spin-circle"></div>
+        <div style="font-size: 35px; margin-bottom: 10px;">🤖</div>
+        <div style="font-family: monospace; font-size: 16px; color: var(--blue); font-weight: bold; letter-spacing: 1px;">جاري الفحص للتحقق من الخانة...</div>
+        <div style="width: 200px;" class="progress-bar"><div class="progress-line"></div></div>
     </div>
 
     <div id="screen-pass" class="container">
@@ -185,15 +203,17 @@
                 cell.className = 'cell';
                 cell.onclick = () => {
                     playClick();
-                    // منع النقر المتكرر أو النقر على خانة تم كشفها مسبقاً
                     if(cell.getAttribute('data-clicked') === "true") return;
                     cell.setAttribute('data-clicked', "true");
                     
-                    // إظهار تأثير التحليل الذكي داخل الخانة لمدة ثانية
-                    cell.innerHTML = '<div class="cell-spinner"></div>';
-                    cell.style.background = "rgba(0, 212, 255, 0.1)";
+                    // إظهار شاشة التحليل في منتصف الشاشة
+                    const scannerOverlay = document.getElementById('cell-scanner-overlay');
+                    scannerOverlay.classList.remove('hidden');
 
                     setTimeout(() => {
+                        // إخفاء شاشة التحليل بعد ثانية
+                        scannerOverlay.classList.add('hidden');
+
                         if(currentBombs.includes(i)) {
                             cell.innerHTML = "💣"; 
                             cell.style.background = "rgba(255,0,0,0.3)";
@@ -206,7 +226,7 @@
                             let g = document.getElementById('gems-count');
                             g.innerText = parseInt(g.innerText) + 1;
                         }
-                    }, 1000); // تأخير مدته ثانية واحدة (1000 ميلي ثانية)
+                    }, 1000); // مدة التحميل ثانية واحدة
                 };
                 grid.appendChild(cell);
             }
