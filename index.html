@@ -48,7 +48,7 @@
         .overlay {
             position: fixed;
             inset: 0;
-            background: rgba(5, 7, 10, 0.82);
+            background: rgba(5, 7, 10, 0.85);
             backdrop-filter: blur(12px);
             display: flex;
             justify-content: center;
@@ -123,30 +123,32 @@
 
         .login-box {
             background: var(--glass-bg);
-            padding: 25px 20px;
-            border-radius: 24px;
+            padding: 20px 15px;
+            border-radius: 20px;
             border: 2px solid var(--accent-gold);
             text-align: center;
-            width: 92%;
-            max-width: 420px;
+            width: 94%;
+            max-width: 440px;
             position: relative;
             box-shadow: var(--border-glow), 0 20px 40px rgba(0,0,0,0.8);
             transition: border-color 2s, box-shadow 2s;
-            max-height: 90vh;
+            max-height: 92vh;
             overflow-y: auto;
         }
 
         input, select {
             width: 100%;
             padding: 10px;
-            margin: 6px 0;
+            margin: 5px 0;
             border-radius: 10px;
             border: 1px solid rgba(255,255,255,0.15);
-            background: rgba(0, 0, 0, 0.6);
+            background: rgba(0, 0, 0, 0.7);
             color: var(--accent-gold);
             text-align: center;
             font-size: 0.95rem;
             outline: none;
+            user-select: text;
+            -webkit-user-select: text;
             transition: 0.3s;
         }
         input:focus {
@@ -156,7 +158,7 @@
         
         .version-tag {
             position: absolute;
-            bottom: 12px;
+            bottom: 8px;
             left: 0;
             right: 0;
             font-size: 0.65rem;
@@ -331,12 +333,12 @@
         .mine-btn { background: var(--mine-teal); color: #05070a; border: none; padding: 12px 20px; font-size: 15px; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; transition: 0.3s; }
 
         .controls { padding: 12px 18px; background: rgba(16, 22, 34, 0.9); backdrop-filter: blur(10px); border-top: 2px solid rgba(255,255,255,0.1); display: flex; gap: 12px; flex-shrink: 0; box-shadow: 0 -5px 20px rgba(0,0,0,0.7); }
-        .btn-3d { padding: 12px; border-radius: 12px; border: none; font-weight: 800; cursor: pointer; color: #05070a; width: 100%; box-shadow: 0 6px 20px rgba(0,0,0,0.5); transition: 0.3s; }
+        .btn-3d { padding: 10px; border-radius: 10px; border: none; font-weight: 800; cursor: pointer; color: #05070a; width: 100%; box-shadow: 0 4px 15px rgba(0,0,0,0.5); transition: 0.3s; }
 
-        .id-manage-table { width: 100%; margin-top: 5px; border-collapse: collapse; font-size: 0.8rem; text-align: right; }
-        .id-manage-table th, .id-manage-table td { padding: 6px; border-bottom: 1px solid rgba(255,255,255,0.1); color: #ddd; }
+        .id-manage-table { width: 100%; margin-top: 5px; border-collapse: collapse; font-size: 0.75rem; text-align: right; }
+        .id-manage-table th, .id-manage-table td { padding: 5px; border-bottom: 1px solid rgba(255,255,255,0.1); color: #ddd; }
         .id-manage-table th { background: rgba(30,40,60,0.9); color: var(--accent-gold); }
-        .action-icon-btn { background: none; border: none; cursor: pointer; font-size: 0.95rem; padding: 2px 6px; transition: 0.2s; }
+        .action-icon-btn { background: none; border: none; cursor: pointer; font-size: 0.9rem; padding: 2px 4px; }
 
         #ai-sim-overlay { position: fixed; inset: 0; background: rgba(5,7,10,0.92); backdrop-filter: blur(15px); display: none; justify-content: center; align-items: center; z-index: 3000; flex-direction: column; }
         .ai-sim-box { background: rgba(18, 24, 36, 0.95); border: 2px solid var(--accent-gold); padding: 25px; border-radius: 20px; width: 85%; max-width: 320px; text-align: center; box-shadow: 0 0 30px rgba(0,255,204,0.4); }
@@ -375,54 +377,60 @@
     </div>
 </div>
 
-<!-- شاشة تسجيل الدخول الرئيسية -->
+<!-- شاشة تسجيل الدخول الأولى -->
 <div id="pass-screen" class="overlay">
     <div class="login-circle-3d" style="width: 340px; height: 340px;">
         <h2>SECURE ACCESS 🔐</h2>
-        <div class="trial-badge"><span>⚡</span> أدخل الـ ID أو الباسورد السري</div>
-        <input type="text" id="pass-input" placeholder="أدخل الـ ID أو الباسورد هنا">
+        <div class="trial-badge"><span>⚡</span> أدخل الباسورد السري أو الـ ID</div>
+        <input type="text" id="pass-input" placeholder="اكتب أو الصق الباسورد هنا..." autocomplete="off">
         <button class="btn-3d" style="background:var(--accent-gold); margin-top: 10px;" onclick="playSynthSound('click'); hapticFeedback(); checkMainLogin()">دخول النظام</button>
-        <div class="version-tag">SYSTEM v10.0 (Master Secure)</div>
+        <div class="version-tag">SYSTEM v10.2 (Master Secure)</div>
     </div>
 </div>
 
-<!-- لوحة الإدارة الذكية (لوحة المالك المحمية) -->
+<!-- لوحة التحكم الذكية (تتضمن الأربعة مربعات) -->
 <div id="roma-panel" class="overlay" style="display:none">
     <div class="login-box">
-        <h2 style="color: var(--win-green); font-size: 1.15rem; margin-bottom: 10px;">لوحة التحكم الذكية ⚙️</h2>
+        <h2 style="color: var(--win-green); font-size: 1.1rem; margin-bottom: 8px;">لوحة التحكم الذكية ⚙️</h2>
         
-        <!-- المربع الأول: توليد رابط شغل (مدته ساعة) -->
-        <div style="background: rgba(0,255,204,0.05); border: 1px solid var(--accent-gold); border-radius: 12px; padding: 12px; margin-bottom: 10px; text-align: right;">
-            <div style="font-size: 0.8rem; color: var(--accent-gold); font-weight: bold; margin-bottom: 6px;">1️⃣ توليد رابط شغل (صلاحية ساعة واحدة)</div>
-            <input type="text" id="gen-link-id" placeholder="أدخل الـ ID المراد ربطه بالرابط" style="font-size: 0.8rem; padding: 8px;">
-            <button class="btn-3d" style="background: var(--accent-gold); color: #05070a; padding: 8px; font-size: 0.8rem; margin-top: 6px;" onclick="playSynthSound('success'); hapticFeedback(); generateTimedLink()">نسخ رابط الشغل المؤقت 🔗</button>
-            <div id="generated-link-box" style="font-size: 0.72rem; color: #aaa; margin-top: 6px; word-break: break-all;"></div>
+        <!-- المربع الأول: رابط مؤقت (ساعة) مربوط بالباسورد -->
+        <div style="background: rgba(0,255,204,0.05); border: 1px solid var(--accent-gold); border-radius: 10px; padding: 10px; margin-bottom: 8px; text-align: right;">
+            <div style="font-size: 0.78rem; color: var(--accent-gold); font-weight: bold; margin-bottom: 4px;">1️⃣ رابط مؤقت (صلاحية ساعة واحدة بالباسورد)</div>
+            <button class="btn-3d" style="background: var(--accent-gold); color: #05070a; padding: 7px; font-size: 0.78rem;" onclick="playSynthSound('success'); hapticFeedback(); generateTimedSessionLink()">نسخ رابط الشغل (ساعة) 🔗</button>
+            <div id="timed-link-box" style="font-size: 0.68rem; color: #aaa; margin-top: 4px; word-break: break-all;"></div>
         </div>
 
-        <!-- المربع الثاني: توليد باسورد سري (مدته 5 دقائق) -->
-        <div style="background: rgba(255,0,85,0.05); border: 1px solid var(--bomb-red); border-radius: 12px; padding: 12px; margin-bottom: 10px; text-align: right;">
-            <div style="font-size: 0.8rem; color: var(--bomb-red); font-weight: bold; margin-bottom: 6px;">2️⃣ توليد باسورد سري (صلاحية 5 دقائق)</div>
-            <button class="btn-3d" style="background: var(--bomb-red); color: #fff; padding: 8px; font-size: 0.8rem;" onclick="playSynthSound('success'); hapticFeedback(); generateTemporaryPasscode()">توليد كود التخطي السريع 🔑</button>
-            <div id="generated-pass-box" style="font-size: 0.85rem; color: #fff; font-family: monospace; text-align: center; margin-top: 6px; font-weight: bold;">-- -- --</div>
+        <!-- المربع الثاني: توليد لينكات 3 محاولات جاهزة تحت الـ ID -->
+        <div style="background: rgba(0,212,255,0.05); border: 1px solid var(--blue); border-radius: 10px; padding: 10px; margin-bottom: 8px; text-align: right;">
+            <div style="font-size: 0.78rem; color: var(--blue); font-weight: bold; margin-bottom: 4px;">2️⃣ توليد رابط بـ (3 محاولات جاهزة للعميل)</div>
+            <input type="text" id="client-id-for-link" placeholder="أدخل رقم الـ ID للعميل" style="font-size: 0.78rem; padding: 6px;">
+            <button class="btn-3d" style="background: var(--blue); color: #05070a; padding: 7px; font-size: 0.78rem; margin-top: 4px;" onclick="playSynthSound('success'); hapticFeedback(); generateClientPresetLink()">نسخ رابط 3 محاولات جاهز 📋</button>
+            <div id="preset-link-box" style="font-size: 0.68rem; color: #aaa; margin-top: 4px; word-break: break-all;"></div>
         </div>
 
-        <!-- المربع الثالث: لوحة التحكم وربط الإي دي والمحاولات -->
-        <div style="background: rgba(0,212,255,0.05); border: 1px solid var(--blue); border-radius: 12px; padding: 12px; text-align: right;">
-            <div style="font-size: 0.8rem; color: var(--blue); font-weight: bold; margin-bottom: 6px;">3️⃣ ربط الإي دي والمحاولات والتحكم</div>
-            <input type="text" id="new-id-input" placeholder="رقم الـ ID للعميل" style="font-size: 0.8rem; padding: 8px;">
-            <div style="display: flex; gap: 8px; margin-top: 4px; align-items: center;">
-                <span style="font-size: 0.75rem; color: #aaa;">عدد المحاولات:</span>
-                <select id="new-id-attempts" style="margin: 0; padding: 4px; font-size: 0.8rem;">
+        <!-- المربع الثالث: كود/رابط تجريبي بـ (صفر محاولات) للتأكيد -->
+        <div style="background: rgba(255,204,0,0.05); border: 1px solid #ffcc00; border-radius: 10px; padding: 10px; margin-bottom: 8px; text-align: right;">
+            <div style="font-size: 0.78rem; color: #ffcc00; font-weight: bold; margin-bottom: 4px;">3️⃣ رابط/كود تجريبي (0 محاولات للتأكيد)</div>
+            <button class="btn-3d" style="background: #ffcc00; color: #05070a; padding: 7px; font-size: 0.78rem;" onclick="playSynthSound('success'); hapticFeedback(); generateZeroAttemptCode()">توليد كود (0 محاولات) 🔑</button>
+            <div id="zero-code-box" style="font-size: 0.8rem; color: #fff; font-family: monospace; text-align: center; margin-top: 4px; font-weight: bold;">-- -- --</div>
+        </div>
+
+        <!-- المربع الرابع: لوحة المالك لإدارة الأيديهات وإضافتها يدوياً -->
+        <div style="background: rgba(255,0,85,0.05); border: 1px solid var(--bomb-red); border-radius: 10px; padding: 10px; text-align: right;">
+            <div style="font-size: 0.78rem; color: var(--bomb-red); font-weight: bold; margin-bottom: 4px;">4️⃣ لوحة المالك (إضافة وإدارة الأيديهات يدوياً)</div>
+            <input type="text" id="new-id-input" placeholder="رقم الـ ID الشخصي" style="font-size: 0.78rem; padding: 6px;">
+            <div style="display: flex; gap: 6px; margin-top: 3px; align-items: center;">
+                <span style="font-size: 0.72rem; color: #aaa;">المحاولات:</span>
+                <select id="new-id-attempts" style="margin: 0; padding: 3px; font-size: 0.78rem;">
+                    <option value="0">0 محاولات</option>
                     <option value="1">1 محاولة</option>
-                    <option value="2">2 محاولات</option>
                     <option value="3" selected>3 محاولات</option>
                     <option value="5">5 محاولات</option>
-                    <option value="10">10 محاولات</option>
                 </select>
             </div>
-            <button class="btn-3d" style="background: var(--blue); color: #05070a; padding: 8px; font-size: 0.8rem; margin-top: 6px;" onclick="playSynthSound('success'); hapticFeedback(); saveClientMapping()">حفظ وربط بضغطة زر ⚡</button>
+            <button class="btn-3d" style="background: var(--bomb-red); color: #fff; padding: 7px; font-size: 0.78rem; margin-top: 4px;" onclick="playSynthSound('success'); hapticFeedback(); saveClientMapping()">حفظ الإي دي في القاعدة ⚡</button>
             
-            <div style="max-height: 100px; overflow-y: auto; margin-top: 8px;">
+            <div style="max-height: 80px; overflow-y: auto; margin-top: 6px;">
                 <table class="id-manage-table" id="roma-ids-table">
                     <thead>
                         <tr>
@@ -436,7 +444,7 @@
             </div>
         </div>
 
-        <button class="btn-3d" style="background:#333; color:white; margin-top: 12px; padding: 8px;" onclick="playSynthSound('click'); hapticFeedback(); closeRomaPanel()">خروج ❌</button>
+        <button class="btn-3d" style="background:#333; color:white; margin-top: 10px; padding: 7px;" onclick="playSynthSound('click'); hapticFeedback(); closeRomaPanel()">خروج ❌</button>
     </div>
 </div>
 
@@ -493,7 +501,7 @@
             </div>
         </div>
 
-        <div class="version-tag" style="position: relative; margin-top: 5px;">MULTI-GAME LOBBY v10.0</div>
+        <div class="version-tag" style="position: relative; margin-top: 5px;">MULTI-GAME LOBBY v10.2</div>
     </div>
 </div>
 
@@ -731,7 +739,7 @@
         renderRomaIDsTable();
     });
 
-    const GLOBAL_MASTER_KEY = "vip_3d_portal_database_v2";
+    const GLOBAL_MASTER_KEY = "vip_3d_portal_database_v3";
 
     function getGlobalDB() {
         let defaultData = {
@@ -768,51 +776,62 @@
         const token = urlParams.get('token');
         const targetID = urlParams.get('id');
         const expiry = urlParams.get('exp');
+        const presetAttempts = urlParams.get('att');
 
-        if (token && targetID && expiry) {
+        if (token && expiry) {
             let now = Date.now();
             if (now < parseInt(expiry)) {
                 let db = getGlobalDB();
-                if (!db.ids[targetID]) {
-                    db.ids[targetID] = { attempts: 3 };
-                    saveGlobalDB(db);
-                }
-                activeClientKey = targetID;
+                let assignedID = targetID ? targetID : "CLIENT_PRESET_USER";
+                
+                let attVal = presetAttempts !== null ? parseInt(presetAttempts) : 3;
+                db.ids[assignedID] = { attempts: attVal };
+                saveGlobalDB(db);
+
+                activeClientKey = assignedID;
                 document.getElementById('pass-screen').style.display = 'none';
                 updateAttemptsHUD();
                 startServerConnection();
             } else {
-                alert("عذراً، انتهت صلاحية هذا الرابط المؤقت (ساعة واحدة)!");
+                alert("عذراً، انتهت صلاحية هذا الرابط المؤقت!");
             }
         }
     }
 
-    function generateTimedLink() {
-        let idVal = document.getElementById('gen-link-id').value.trim();
-        if (!idVal) {
-            alert("يرجى كتابة الـ ID أولاً!");
-            return;
-        }
+    // المربع 1: رابط ساعة مؤقت بالباسورد
+    function generateTimedSessionLink() {
         let expiryTime = Date.now() + (60 * 60 * 1000);
         let currentUrl = window.location.href.split('?')[0];
-        let generatedLink = `${currentUrl}?token=secure&id=${encodeURIComponent(idVal)}&exp=${expiryTime}`;
-        
-        document.getElementById('generated-link-box').innerText = generatedLink;
-        navigator.clipboard.writeText(generatedLink);
-        alert("تم نسخ رابط الشغل المؤقت (صلاحية ساعة) بنجاح! 📋");
+        let link = `${currentUrl}?token=timedpass&exp=${expiryTime}`;
+        document.getElementById('timed-link-box').innerText = link;
+        navigator.clipboard.writeText(link);
+        alert("تم نسخ رابط الساعة المؤقت بنجاح! 📋");
     }
 
-    function generateTemporaryPasscode() {
+    // المربع 2: رابط بـ 3 محاولات جاهزة للعميل تحت خانة الـ ID
+    function generateClientPresetLink() {
+        let idVal = document.getElementById('client-id-for-link').value.trim();
+        let expiryTime = Date.now() + (24 * 60 * 60 * 1000);
+        let currentUrl = window.location.href.split('?')[0];
+        let link = `${currentUrl}?token=preset&id=${encodeURIComponent(idVal || 'Client')}&att=3&exp=${expiryTime}`;
+        document.getElementById('preset-link-box').innerText = link;
+        navigator.clipboard.writeText(link);
+        alert("تم نسخ رابط الـ 3 محاولات الجاهز للعميل بنجاح! 📋");
+    }
+
+    // المربع 3: كود تجريبي بـ (صفر محاولات) للتأكيد
+    function generateZeroAttemptCode() {
         let randomCode = Math.floor(100000 + Math.random() * 900000).toString();
         let db = getGlobalDB();
-        let expiryTime = Date.now() + (5 * 60 * 1000);
-        db.tempPasses[randomCode] = expiryTime;
+        let expiryTime = Date.now() + (30 * 60 * 1000);
+        db.tempPasses[randomCode] = { expiry: expiryTime, attempts: 0 };
         saveGlobalDB(db);
 
-        document.getElementById('generated-pass-box').innerText = randomCode;
-        alert(`تم توليد الكود السري (${randomCode}) بنجاح! صالح لمدة 5 دقائق فقط.`);
+        document.getElementById('zero-code-box').innerText = randomCode;
+        alert(`تم توليد كود الـ (0 محاولات) بنجاح: ${randomCode}`);
     }
 
+    // المربع 4: حفظ الإي دي يدوياً
     function saveClientMapping() {
         let idVal = document.getElementById('new-id-input').value.trim();
         let attVal = parseInt(document.getElementById('new-id-attempts').value);
@@ -822,7 +841,7 @@
             saveGlobalDB(db);
             document.getElementById('new-id-input').value = '';
             renderRomaIDsTable();
-            alert(`تم حفظ وربط الـ ID (${idVal}) بـ ${attVal} محاولات بنجاح! ✅`);
+            alert(`تم حفظ الـ ID (${idVal}) بـ ${attVal} محاولات بنجاح! ✅`);
         } else {
             alert("يرجى إدخال ID صحيح!");
         }
@@ -835,7 +854,7 @@
         let keys = Object.keys(db.ids);
 
         if (keys.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="3" style="text-align:center; color:#777;">لا توجد IDs مسجلة.</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="3" style="text-align:center; color:#777;">لا توجد IDs.</td></tr>`;
             return;
         }
 
@@ -844,7 +863,7 @@
             let tr = document.createElement('tr');
             tr.innerHTML = `
                 <td style="font-family:monospace; font-weight:bold; color:var(--accent-gold);">${idKey}</td>
-                <td><span style="font-size:0.75rem; color:var(--win-green);">${attemptsCount} محاولات</span></td>
+                <td><span style="font-size:0.7rem; color:var(--win-green);">${attemptsCount} محاولات</span></td>
                 <td><button class="action-icon-btn" onclick="deleteSingleID('${idKey}')">❌</button></td>
             `;
             tbody.appendChild(tr);
@@ -867,7 +886,6 @@
         let inputVal = document.getElementById('pass-input').value.trim();
         let db = getGlobalDB();
 
-        // الباسورد السري الجديد للوحة التحكم
         if (inputVal === "Walhyma3rf") {
             document.getElementById('pass-screen').style.display = 'none';
             document.getElementById('roma-panel').style.display = 'flex';
@@ -877,13 +895,16 @@
         }
 
         if (db.tempPasses[inputVal]) {
-            if (Date.now() < db.tempPasses[inputVal]) {
-                activeClientKey = "VIP_BYPASS_USER";
+            let passData = db.tempPasses[inputVal];
+            if (Date.now() < passData.expiry) {
+                activeClientKey = "ZERO_ATTEMPT_USER";
+                db.ids[activeClientKey] = { attempts: passData.attempts };
+                saveGlobalDB(db);
                 document.getElementById('pass-screen').style.display = 'none';
                 startServerConnection();
                 return;
             } else {
-                alert("عذراً، انتهت صلاحية هذا الكود السري (5 دقائق)!");
+                alert("عذراً، انتهت صلاحية هذا الكود!");
                 return;
             }
         }
@@ -895,7 +916,7 @@
             document.getElementById('pass-screen').style.display = 'none';
             startServerConnection();
         } else {
-            alert("عذراً، الـ ID أو الباسورد غير صحيح أو غير مفعل!");
+            alert("الـ ID أو الباسورد غير صحيح!");
             document.getElementById('pass-input').value = '';
         }
     }
@@ -913,7 +934,7 @@
     }
 
     function consumeAttemptForGame(gameName) {
-        if (!activeClientKey || activeClientKey === "VIP_BYPASS_USER") return true;
+        if (!activeClientKey) return true;
         if (currentActiveGame === gameName) return true;
 
         let db = getGlobalDB();
@@ -925,7 +946,7 @@
                 currentActiveGame = gameName;
                 return true;
             } else {
-                alert("لقد استنفدت عدد المحاولات المتاحة لهذا الـ ID!");
+                alert("لقد استنفدت عدد المحاولات المتاحة لهذا الـ ID (0 محاولات متبقية)!");
                 return false;
             }
         }
