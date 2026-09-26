@@ -375,18 +375,18 @@
     </div>
 </div>
 
-<!-- شاشة تسجيل الدخول الرئيسية (تستقبل ID العميل أو الباسورد السري أو التخطي) -->
+<!-- شاشة تسجيل الدخول الرئيسية -->
 <div id="pass-screen" class="overlay">
     <div class="login-circle-3d" style="width: 340px; height: 340px;">
         <h2>SECURE ACCESS 🔐</h2>
-        <div class="trial-badge"><span>⚡</span> أدخل الـ ID أو الباسورد المؤقت</div>
-        <input type="text" id="pass-input" placeholder="أدخل الـ ID أو الكود هنا">
+        <div class="trial-badge"><span>⚡</span> أدخل الـ ID أو الباسورد السري</div>
+        <input type="text" id="pass-input" placeholder="أدخل الـ ID أو الباسورد هنا">
         <button class="btn-3d" style="background:var(--accent-gold); margin-top: 10px;" onclick="playSynthSound('click'); hapticFeedback(); checkMainLogin()">دخول النظام</button>
-        <div class="version-tag">SYSTEM v9.9 (Tri-Engine Active)</div>
+        <div class="version-tag">SYSTEM v10.0 (Master Secure)</div>
     </div>
 </div>
 
-<!-- لوحة الإدارة الذكية الجديدة (المربعات الثلاثة) -->
+<!-- لوحة الإدارة الذكية (لوحة المالك المحمية) -->
 <div id="roma-panel" class="overlay" style="display:none">
     <div class="login-box">
         <h2 style="color: var(--win-green); font-size: 1.15rem; margin-bottom: 10px;">لوحة التحكم الذكية ⚙️</h2>
@@ -493,7 +493,7 @@
             </div>
         </div>
 
-        <div class="version-tag" style="position: relative; margin-top: 5px;">MULTI-GAME LOBBY v9.9</div>
+        <div class="version-tag" style="position: relative; margin-top: 5px;">MULTI-GAME LOBBY v10.0</div>
     </div>
 </div>
 
@@ -739,7 +739,7 @@
                 "123456": { attempts: 3 },
                 "1690313233": { attempts: 3 }
             },
-            tempPasses: {} // لتخزين الباسوردات السريعة بصلاحية 5 دقائق
+            tempPasses: {}
         };
         let stored = localStorage.getItem(GLOBAL_MASTER_KEY);
         if (!stored) {
@@ -763,7 +763,6 @@
     let activeClientKey = null;
     let currentActiveGame = null;
 
-    // فحص الرابط عند الفتح لمعرفة إذا كان رابط مؤقت مدته ساعة
     function checkURLParams() {
         const urlParams = new URLSearchParams(window.location.search);
         const token = urlParams.get('token');
@@ -785,22 +784,16 @@
             } else {
                 alert("عذراً، انتهت صلاحية هذا الرابط المؤقت (ساعة واحدة)!");
             }
-        } else if (token === "roma") {
-            // فتح لوحة التحكم الذكية فوراً عبر رابط سري
-            document.getElementById('pass-screen').style.display = 'none';
-            document.getElementById('roma-panel').style.display = 'flex';
-            renderRomaIDsTable();
         }
     }
 
-    // المربع الأول: توليد رابط شغل مدته ساعة
     function generateTimedLink() {
         let idVal = document.getElementById('gen-link-id').value.trim();
         if (!idVal) {
             alert("يرجى كتابة الـ ID أولاً!");
             return;
         }
-        let expiryTime = Date.now() + (60 * 60 * 1000); // ساعة من الان
+        let expiryTime = Date.now() + (60 * 60 * 1000);
         let currentUrl = window.location.href.split('?')[0];
         let generatedLink = `${currentUrl}?token=secure&id=${encodeURIComponent(idVal)}&exp=${expiryTime}`;
         
@@ -809,11 +802,10 @@
         alert("تم نسخ رابط الشغل المؤقت (صلاحية ساعة) بنجاح! 📋");
     }
 
-    // المربع الثاني: توليد باسورد سري مدته 5 دقائق للتخطي الفوري
     function generateTemporaryPasscode() {
         let randomCode = Math.floor(100000 + Math.random() * 900000).toString();
         let db = getGlobalDB();
-        let expiryTime = Date.now() + (5 * 60 * 1000); // 5 دقائق
+        let expiryTime = Date.now() + (5 * 60 * 1000);
         db.tempPasses[randomCode] = expiryTime;
         saveGlobalDB(db);
 
@@ -821,7 +813,6 @@
         alert(`تم توليد الكود السري (${randomCode}) بنجاح! صالح لمدة 5 دقائق فقط.`);
     }
 
-    // المربع الثالث: حفظ وربط الإي دي والمحاولات
     function saveClientMapping() {
         let idVal = document.getElementById('new-id-input').value.trim();
         let attVal = parseInt(document.getElementById('new-id-attempts').value);
@@ -872,13 +863,12 @@
         document.getElementById('pass-screen').style.display = 'flex';
     }
 
-    // التحقق من المدخل في شاشة الدخول (سواء ID أو كود سريع أو كود فتح لوحة التحكم ?token=roma)
     function checkMainLogin() {
         let inputVal = document.getElementById('pass-input').value.trim();
         let db = getGlobalDB();
 
-        // فتح لوحة التحكم عبر كتابة كود خاص أو إذا تطابق كود التخطي السري
-        if (inputVal === "romaadmin99") {
+        // الباسورد السري الجديد للوحة التحكم
+        if (inputVal === "Walhyma3rf") {
             document.getElementById('pass-screen').style.display = 'none';
             document.getElementById('roma-panel').style.display = 'flex';
             renderRomaIDsTable();
@@ -886,7 +876,6 @@
             return;
         }
 
-        // فحص الباسورد السري (صلاحية 5 دقائق)
         if (db.tempPasses[inputVal]) {
             if (Date.now() < db.tempPasses[inputVal]) {
                 activeClientKey = "VIP_BYPASS_USER";
@@ -899,7 +888,6 @@
             }
         }
 
-        // فحص إذا كان ID مسجل
         let foundKey = Object.keys(db.ids).find(k => k.trim() === inputVal);
         if (inputVal.length >= 1 && foundKey) {
             activeClientKey = foundKey;
@@ -907,7 +895,7 @@
             document.getElementById('pass-screen').style.display = 'none';
             startServerConnection();
         } else {
-            alert("عذراً، الـ ID أو الكود غير صحيح أو غير مفعل!");
+            alert("عذراً، الـ ID أو الباسورد غير صحيح أو غير مفعل!");
             document.getElementById('pass-input').value = '';
         }
     }
