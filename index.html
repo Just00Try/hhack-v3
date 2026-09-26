@@ -123,27 +123,29 @@
 
         .login-box {
             background: var(--glass-bg);
-            padding: 30px 25px;
+            padding: 25px 20px;
             border-radius: 24px;
             border: 2px solid var(--accent-gold);
             text-align: center;
-            width: 90%;
-            max-width: 360px;
+            width: 92%;
+            max-width: 420px;
             position: relative;
             box-shadow: var(--border-glow), 0 20px 40px rgba(0,0,0,0.8);
             transition: border-color 2s, box-shadow 2s;
+            max-height: 90vh;
+            overflow-y: auto;
         }
 
         input, select {
             width: 100%;
-            padding: 12px;
-            margin: 8px 0;
-            border-radius: 12px;
+            padding: 10px;
+            margin: 6px 0;
+            border-radius: 10px;
             border: 1px solid rgba(255,255,255,0.15);
             background: rgba(0, 0, 0, 0.6);
             color: var(--accent-gold);
             text-align: center;
-            font-size: 1rem;
+            font-size: 0.95rem;
             outline: none;
             transition: 0.3s;
         }
@@ -332,7 +334,7 @@
         .btn-3d { padding: 12px; border-radius: 12px; border: none; font-weight: 800; cursor: pointer; color: #05070a; width: 100%; box-shadow: 0 6px 20px rgba(0,0,0,0.5); transition: 0.3s; }
 
         .id-manage-table { width: 100%; margin-top: 5px; border-collapse: collapse; font-size: 0.8rem; text-align: right; }
-        .id-manage-table th, .id-manage-table td { padding: 8px; border-bottom: 1px solid rgba(255,255,255,0.1); color: #ddd; }
+        .id-manage-table th, .id-manage-table td { padding: 6px; border-bottom: 1px solid rgba(255,255,255,0.1); color: #ddd; }
         .id-manage-table th { background: rgba(30,40,60,0.9); color: var(--accent-gold); }
         .action-icon-btn { background: none; border: none; cursor: pointer; font-size: 0.95rem; padding: 2px 6px; transition: 0.2s; }
 
@@ -373,45 +375,60 @@
     </div>
 </div>
 
+<!-- شاشة تسجيل الدخول الرئيسية (تستقبل ID العميل أو الباسورد السري أو التخطي) -->
 <div id="pass-screen" class="overlay">
-    <div class="login-circle-3d">
+    <div class="login-circle-3d" style="width: 340px; height: 340px;">
         <h2>SECURE ACCESS 🔐</h2>
-        <div class="trial-badge"><span>⚡</span> أدخل الباسورد الثابت</div>
-        <input type="password" id="pass-input" placeholder="أدخل الباسورد هنا">
-        <button class="btn-3d" style="background:var(--accent-gold); margin-top: 10px;" onclick="playSynthSound('click'); hapticFeedback(); checkPass()">دخول</button>
-        <div class="version-tag">SYSTEM v9.8 (Autonomous Live Engine)</div>
+        <div class="trial-badge"><span>⚡</span> أدخل الـ ID أو الباسورد المؤقت</div>
+        <input type="text" id="pass-input" placeholder="أدخل الـ ID أو الكود هنا">
+        <button class="btn-3d" style="background:var(--accent-gold); margin-top: 10px;" onclick="playSynthSound('click'); hapticFeedback(); checkMainLogin()">دخول النظام</button>
+        <div class="version-tag">SYSTEM v9.9 (Tri-Engine Active)</div>
     </div>
 </div>
 
+<!-- لوحة الإدارة الذكية الجديدة (المربعات الثلاثة) -->
 <div id="roma-panel" class="overlay" style="display:none">
-    <div class="login-box" style="border-color: var(--win-green); max-width: 420px;">
-        <h2 style="color: var(--win-green); font-size: 1.15rem;">إدارة وتفعيل الـ IDs المشتركة ⚙️</h2>
-        <div style="margin-top: 10px; text-align: right;">
-            <input type="text" id="new-id-input" placeholder="أدخل الـ ID الجديد للعميل" style="font-size: 0.85rem; padding: 10px;">
-            <div style="display: flex; gap: 8px; margin-top: 6px; align-items: center;">
+    <div class="login-box">
+        <h2 style="color: var(--win-green); font-size: 1.15rem; margin-bottom: 10px;">لوحة التحكم الذكية ⚙️</h2>
+        
+        <!-- المربع الأول: توليد رابط شغل (مدته ساعة) -->
+        <div style="background: rgba(0,255,204,0.05); border: 1px solid var(--accent-gold); border-radius: 12px; padding: 12px; margin-bottom: 10px; text-align: right;">
+            <div style="font-size: 0.8rem; color: var(--accent-gold); font-weight: bold; margin-bottom: 6px;">1️⃣ توليد رابط شغل (صلاحية ساعة واحدة)</div>
+            <input type="text" id="gen-link-id" placeholder="أدخل الـ ID المراد ربطه بالرابط" style="font-size: 0.8rem; padding: 8px;">
+            <button class="btn-3d" style="background: var(--accent-gold); color: #05070a; padding: 8px; font-size: 0.8rem; margin-top: 6px;" onclick="playSynthSound('success'); hapticFeedback(); generateTimedLink()">نسخ رابط الشغل المؤقت 🔗</button>
+            <div id="generated-link-box" style="font-size: 0.72rem; color: #aaa; margin-top: 6px; word-break: break-all;"></div>
+        </div>
+
+        <!-- المربع الثاني: توليد باسورد سري (مدته 5 دقائق) -->
+        <div style="background: rgba(255,0,85,0.05); border: 1px solid var(--bomb-red); border-radius: 12px; padding: 12px; margin-bottom: 10px; text-align: right;">
+            <div style="font-size: 0.8rem; color: var(--bomb-red); font-weight: bold; margin-bottom: 6px;">2️⃣ توليد باسورد سري (صلاحية 5 دقائق)</div>
+            <button class="btn-3d" style="background: var(--bomb-red); color: #fff; padding: 8px; font-size: 0.8rem;" onclick="playSynthSound('success'); hapticFeedback(); generateTemporaryPasscode()">توليد كود التخطي السريع 🔑</button>
+            <div id="generated-pass-box" style="font-size: 0.85rem; color: #fff; font-family: monospace; text-align: center; margin-top: 6px; font-weight: bold;">-- -- --</div>
+        </div>
+
+        <!-- المربع الثالث: لوحة التحكم وربط الإي دي والمحاولات -->
+        <div style="background: rgba(0,212,255,0.05); border: 1px solid var(--blue); border-radius: 12px; padding: 12px; text-align: right;">
+            <div style="font-size: 0.8rem; color: var(--blue); font-weight: bold; margin-bottom: 6px;">3️⃣ ربط الإي دي والمحاولات والتحكم</div>
+            <input type="text" id="new-id-input" placeholder="رقم الـ ID للعميل" style="font-size: 0.8rem; padding: 8px;">
+            <div style="display: flex; gap: 8px; margin-top: 4px; align-items: center;">
                 <span style="font-size: 0.75rem; color: #aaa;">عدد المحاولات:</span>
-                <select id="new-id-attempts" style="margin: 0; padding: 6px; font-size: 0.85rem;">
-                    <option value="0">0 محاولات</option>
+                <select id="new-id-attempts" style="margin: 0; padding: 4px; font-size: 0.8rem;">
                     <option value="1">1 محاولة</option>
                     <option value="2">2 محاولات</option>
                     <option value="3" selected>3 محاولات</option>
-                    <option value="4">4 محاولات</option>
                     <option value="5">5 محاولات</option>
+                    <option value="10">10 محاولات</option>
                 </select>
             </div>
-            <button class="btn-3d" style="background: var(--win-green); color: #05070a; padding: 9px; font-size: 0.85rem; width: 100%; margin-top: 8px;" onclick="playSynthSound('success'); hapticFeedback(); addClientCustomID()">إضافة وتفعيل الـ ID</button>
-        </div>
-
-        <div style="margin-top: 15px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 8px; text-align: right;">
-            <span style="font-size: 0.75rem; color: var(--win-green); font-weight: bold;">الـ IDs المفعلة حالياً:</span>
-            <div style="max-height: 180px; overflow-y: auto; margin-top: 6px;">
+            <button class="btn-3d" style="background: var(--blue); color: #05070a; padding: 8px; font-size: 0.8rem; margin-top: 6px;" onclick="playSynthSound('success'); hapticFeedback(); saveClientMapping()">حفظ وربط بضغطة زر ⚡</button>
+            
+            <div style="max-height: 100px; overflow-y: auto; margin-top: 8px;">
                 <table class="id-manage-table" id="roma-ids-table">
                     <thead>
                         <tr>
                             <th>الـ ID</th>
                             <th>المحاولات</th>
-                            <th>تعديل</th>
-                            <th>إجراء</th>
+                            <th>حذف</th>
                         </tr>
                     </thead>
                     <tbody id="roma-ids-tbody"></tbody>
@@ -419,17 +436,7 @@
             </div>
         </div>
 
-        <button class="btn-3d" style="background:#333; color:white; margin-top: 15px; padding: 9px;" onclick="playSynthSound('click'); hapticFeedback(); closeRomaPanel()">خروج ❌</button>
-    </div>
-</div>
-
-<div id="id-screen" class="overlay" style="display:none">
-    <div class="login-circle-3d">
-        <h2>ID LOGIN 🆔</h2>
-        <div class="trial-badge"><span>⚡</span> أدخل الـ ID الخاص بك</div>
-        <input type="text" id="id-input" placeholder="أدخل الـ ID هنا">
-        <button class="btn-3d" style="background:var(--accent-gold); margin-top: 10px;" onclick="playSynthSound('click'); hapticFeedback(); checkID()">تنشيط الاتصال</button>
-        <div class="version-tag">CLIENT AUTH 3D</div>
+        <button class="btn-3d" style="background:#333; color:white; margin-top: 12px; padding: 8px;" onclick="playSynthSound('click'); hapticFeedback(); closeRomaPanel()">خروج ❌</button>
     </div>
 </div>
 
@@ -486,7 +493,7 @@
             </div>
         </div>
 
-        <div class="version-tag" style="position: relative; margin-top: 5px;">MULTI-GAME LOBBY v9.8</div>
+        <div class="version-tag" style="position: relative; margin-top: 5px;">MULTI-GAME LOBBY v9.9</div>
     </div>
 </div>
 
@@ -573,7 +580,6 @@
 </div>
 
 <script>
-    // --- نظام مؤثرات الصوت البرمجية ---
     let audioCtx = null;
     function initAudio() {
         if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -613,7 +619,6 @@
         if (navigator.vibrate) navigator.vibrate(35);
     }
 
-    // --- نظام الجسيمات الخلفية ---
     const canvas = document.getElementById('matrix-canvas');
     const ctx = canvas.getContext('2d');
     let particles = [];
@@ -693,7 +698,6 @@
     }
     animateParticles();
 
-    // --- البرمجة الذاتية لتغيير الألوان تلقائياً ببطء وهدوء (كل 20 ثانية) ---
     const autonomousPalettes = [
         { gold: '#00ffcc', blue: '#00d4ff', neon: '#00ff66', glow: 'rgba(0,255,204,0.4)' },
         { gold: '#ffcc00', blue: '#ff9900', neon: '#ff0055', glow: 'rgba(255,204,0,0.4)' },
@@ -712,36 +716,30 @@
             root.style.setProperty('--neon-green', palette.neon);
             root.style.setProperty('--mine-teal', palette.gold);
             root.style.setProperty('--border-glow', `0 0 25px ${palette.glow}, inset 0 0 15px rgba(0, 212, 255, 0.2)`);
-            
             document.body.style.boxShadow = `inset 0 0 60px ${palette.glow}`;
-        }, 20000); // تم تعديلها لتتغير كل 20 ثانية بسلاسة وهدوء تام
+        }, 20000);
 
-        // محاكاة بينج السيرفر الحي المتغير
         setInterval(() => {
             let pingEl = document.getElementById('ping-hud');
-            if (pingEl) {
-                let randomPing = Math.floor(12 + Math.random() * 16);
-                pingEl.innerText = randomPing;
-            }
+            if (pingEl) pingEl.innerText = Math.floor(12 + Math.random() * 16);
         }, 4000);
     }
 
     window.addEventListener('DOMContentLoaded', () => {
         startAutonomousColorEngine();
+        checkURLParams();
+        renderRomaIDsTable();
     });
 
-    const GLOBAL_MASTER_KEY = "vip_3d_portal_password_db_v1";
-    const FIXED_PASSWORD = "809011";
+    const GLOBAL_MASTER_KEY = "vip_3d_portal_database_v2";
 
     function getGlobalDB() {
         let defaultData = {
             ids: { 
-                "123456": { status: "مفعل نشط", attempts: 3 },
-                "1690313233": { status: "مفعل نشط", attempts: 3 },
-                "1501217291": { status: "مفعل نشط", attempts: 3 },
-                "1658356877": { status: "مفعل نشط", attempts: 3 },
-                "254397541": { status: "مفعل نشط", attempts: 0 }
-            }
+                "123456": { attempts: 3 },
+                "1690313233": { attempts: 3 }
+            },
+            tempPasses: {} // لتخزين الباسوردات السريعة بصلاحية 5 دقائق
         };
         let stored = localStorage.getItem(GLOBAL_MASTER_KEY);
         if (!stored) {
@@ -751,6 +749,7 @@
         try {
             let parsed = JSON.parse(stored);
             if (!parsed.ids) parsed.ids = {};
+            if (!parsed.tempPasses) parsed.tempPasses = {};
             return parsed;
         } catch(e) {
             return defaultData;
@@ -764,19 +763,169 @@
     let activeClientKey = null;
     let currentActiveGame = null;
 
-    function updateAttemptsHUD() {
-        let db = getGlobalDB();
-        if (activeClientKey && db.ids[activeClientKey]) {
-            let attempts = db.ids[activeClientKey].attempts;
-            ['attempts-hud', 'game-attempts-hud-apple', 'game-attempts-hud-gems', 'game-attempts-hud-royal', 'game-attempts-hud-gold'].forEach(id => {
-                let el = document.getElementById(id);
-                if (el) el.innerText = `🎮 ${attempts}`;
-            });
+    // فحص الرابط عند الفتح لمعرفة إذا كان رابط مؤقت مدته ساعة
+    function checkURLParams() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const token = urlParams.get('token');
+        const targetID = urlParams.get('id');
+        const expiry = urlParams.get('exp');
+
+        if (token && targetID && expiry) {
+            let now = Date.now();
+            if (now < parseInt(expiry)) {
+                let db = getGlobalDB();
+                if (!db.ids[targetID]) {
+                    db.ids[targetID] = { attempts: 3 };
+                    saveGlobalDB(db);
+                }
+                activeClientKey = targetID;
+                document.getElementById('pass-screen').style.display = 'none';
+                updateAttemptsHUD();
+                startServerConnection();
+            } else {
+                alert("عذراً، انتهت صلاحية هذا الرابط المؤقت (ساعة واحدة)!");
+            }
+        } else if (token === "roma") {
+            // فتح لوحة التحكم الذكية فوراً عبر رابط سري
+            document.getElementById('pass-screen').style.display = 'none';
+            document.getElementById('roma-panel').style.display = 'flex';
+            renderRomaIDsTable();
         }
     }
 
+    // المربع الأول: توليد رابط شغل مدته ساعة
+    function generateTimedLink() {
+        let idVal = document.getElementById('gen-link-id').value.trim();
+        if (!idVal) {
+            alert("يرجى كتابة الـ ID أولاً!");
+            return;
+        }
+        let expiryTime = Date.now() + (60 * 60 * 1000); // ساعة من الان
+        let currentUrl = window.location.href.split('?')[0];
+        let generatedLink = `${currentUrl}?token=secure&id=${encodeURIComponent(idVal)}&exp=${expiryTime}`;
+        
+        document.getElementById('generated-link-box').innerText = generatedLink;
+        navigator.clipboard.writeText(generatedLink);
+        alert("تم نسخ رابط الشغل المؤقت (صلاحية ساعة) بنجاح! 📋");
+    }
+
+    // المربع الثاني: توليد باسورد سري مدته 5 دقائق للتخطي الفوري
+    function generateTemporaryPasscode() {
+        let randomCode = Math.floor(100000 + Math.random() * 900000).toString();
+        let db = getGlobalDB();
+        let expiryTime = Date.now() + (5 * 60 * 1000); // 5 دقائق
+        db.tempPasses[randomCode] = expiryTime;
+        saveGlobalDB(db);
+
+        document.getElementById('generated-pass-box').innerText = randomCode;
+        alert(`تم توليد الكود السري (${randomCode}) بنجاح! صالح لمدة 5 دقائق فقط.`);
+    }
+
+    // المربع الثالث: حفظ وربط الإي دي والمحاولات
+    function saveClientMapping() {
+        let idVal = document.getElementById('new-id-input').value.trim();
+        let attVal = parseInt(document.getElementById('new-id-attempts').value);
+        if (idVal.length >= 1) {
+            let db = getGlobalDB();
+            db.ids[idVal] = { attempts: attVal };
+            saveGlobalDB(db);
+            document.getElementById('new-id-input').value = '';
+            renderRomaIDsTable();
+            alert(`تم حفظ وربط الـ ID (${idVal}) بـ ${attVal} محاولات بنجاح! ✅`);
+        } else {
+            alert("يرجى إدخال ID صحيح!");
+        }
+    }
+
+    function renderRomaIDsTable() {
+        let tbody = document.getElementById('roma-ids-tbody');
+        tbody.innerHTML = '';
+        let db = getGlobalDB();
+        let keys = Object.keys(db.ids);
+
+        if (keys.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="3" style="text-align:center; color:#777;">لا توجد IDs مسجلة.</td></tr>`;
+            return;
+        }
+
+        keys.forEach(idKey => {
+            let attemptsCount = db.ids[idKey].attempts !== undefined ? db.ids[idKey].attempts : 3;
+            let tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td style="font-family:monospace; font-weight:bold; color:var(--accent-gold);">${idKey}</td>
+                <td><span style="font-size:0.75rem; color:var(--win-green);">${attemptsCount} محاولات</span></td>
+                <td><button class="action-icon-btn" onclick="deleteSingleID('${idKey}')">❌</button></td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
+
+    function deleteSingleID(idKey) {
+        let db = getGlobalDB();
+        delete db.ids[idKey];
+        saveGlobalDB(db);
+        renderRomaIDsTable();
+    }
+
+    function closeRomaPanel() {
+        document.getElementById('roma-panel').style.display = 'none';
+        document.getElementById('pass-screen').style.display = 'flex';
+    }
+
+    // التحقق من المدخل في شاشة الدخول (سواء ID أو كود سريع أو كود فتح لوحة التحكم ?token=roma)
+    function checkMainLogin() {
+        let inputVal = document.getElementById('pass-input').value.trim();
+        let db = getGlobalDB();
+
+        // فتح لوحة التحكم عبر كتابة كود خاص أو إذا تطابق كود التخطي السري
+        if (inputVal === "romaadmin99") {
+            document.getElementById('pass-screen').style.display = 'none';
+            document.getElementById('roma-panel').style.display = 'flex';
+            renderRomaIDsTable();
+            document.getElementById('pass-input').value = '';
+            return;
+        }
+
+        // فحص الباسورد السري (صلاحية 5 دقائق)
+        if (db.tempPasses[inputVal]) {
+            if (Date.now() < db.tempPasses[inputVal]) {
+                activeClientKey = "VIP_BYPASS_USER";
+                document.getElementById('pass-screen').style.display = 'none';
+                startServerConnection();
+                return;
+            } else {
+                alert("عذراً، انتهت صلاحية هذا الكود السري (5 دقائق)!");
+                return;
+            }
+        }
+
+        // فحص إذا كان ID مسجل
+        let foundKey = Object.keys(db.ids).find(k => k.trim() === inputVal);
+        if (inputVal.length >= 1 && foundKey) {
+            activeClientKey = foundKey;
+            updateAttemptsHUD();
+            document.getElementById('pass-screen').style.display = 'none';
+            startServerConnection();
+        } else {
+            alert("عذراً، الـ ID أو الكود غير صحيح أو غير مفعل!");
+            document.getElementById('pass-input').value = '';
+        }
+    }
+
+    function updateAttemptsHUD() {
+        let db = getGlobalDB();
+        let attempts = 3;
+        if (activeClientKey && db.ids[activeClientKey]) {
+            attempts = db.ids[activeClientKey].attempts;
+        }
+        ['attempts-hud', 'game-attempts-hud-apple', 'game-attempts-hud-gems', 'game-attempts-hud-royal', 'game-attempts-hud-gold'].forEach(id => {
+            let el = document.getElementById(id);
+            if (el) el.innerText = `🎮 ${attempts}`;
+        });
+    }
+
     function consumeAttemptForGame(gameName) {
-        if (!activeClientKey) return true;
+        if (!activeClientKey || activeClientKey === "VIP_BYPASS_USER") return true;
         if (currentActiveGame === gameName) return true;
 
         let db = getGlobalDB();
@@ -795,149 +944,9 @@
         return true;
     }
 
-    function runAISimulation(gameName, callback) {
-        if (!consumeAttemptForGame(gameName)) return;
-        
-        const overlay = document.getElementById('ai-sim-overlay');
-        const text = document.getElementById('ai-sim-text');
-        const bar = document.getElementById('ai-sim-bar');
-        
-        overlay.style.display = 'flex';
-        bar.style.width = '0%';
-
-        let steps = [
-            "جاري مزامنة ترددات السيرفر الحي...",
-            "تحليل أنماط التشابك والنيون التلقائي...",
-            "مطابقة النطاق الآمن بنسبة 99.9%...",
-            "تم الاستخراج وتفعيل الواقعية بنجاح!"
-        ];
-
-        let p = 0;
-        let interval = setInterval(() => {
-            p += 25;
-            bar.style.width = p + '%';
-            let stepIdx = Math.min(Math.floor(p / 30), steps.length - 1);
-            text.innerText = steps[stepIdx];
-
-            if (p >= 100) {
-                clearInterval(interval);
-                setTimeout(() => {
-                    overlay.style.display = 'none';
-                    if (callback) callback();
-                }, 250);
-            }
-        }, 180);
-    }
-
-    function addClientCustomID() {
-        let idVal = document.getElementById('new-id-input').value.trim();
-        let attVal = parseInt(document.getElementById('new-id-attempts').value);
-        if (idVal.length >= 1) {
-            let db = getGlobalDB();
-            db.ids[idVal] = { status: "مفعل نشط", attempts: attVal };
-            saveGlobalDB(db);
-            document.getElementById('new-id-input').value = '';
-            renderRomaIDsTable();
-            alert(`تم حفظ وتفعيل الـ ID (${idVal}) بنجاح! ✅`);
-        } else {
-            alert("يرجى كتابة ID صحيح!");
-        }
-    }
-
-    function updateIDAttempts(idKey, changeVal) {
-        let db = getGlobalDB();
-        if (db.ids[idKey]) {
-            db.ids[idKey].attempts = Math.max(0, (db.ids[idKey].attempts || 0) + changeVal);
-            saveGlobalDB(db);
-            renderRomaIDsTable();
-            if (activeClientKey === idKey) updateAttemptsHUD();
-        }
-    }
-
-    function renderRomaIDsTable() {
-        let tbody = document.getElementById('roma-ids-tbody');
-        tbody.innerHTML = '';
-        let db = getGlobalDB();
-        let keys = Object.keys(db.ids);
-
-        if (keys.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:#777;">لا توجد IDs مفعلة.</td></tr>`;
-            return;
-        }
-
-        keys.forEach(idKey => {
-            let attemptsCount = db.ids[idKey].attempts !== undefined ? db.ids[idKey].attempts : 3;
-            let tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td style="font-family:monospace; font-weight:bold; color:var(--win-green);">${idKey}</td>
-                <td><span style="font-size:0.75rem; color:var(--accent-gold);">${attemptsCount}</span></td>
-                <td style="display: flex; gap: 4px; align-items: center;">
-                    <button class="action-icon-btn" style="color:var(--win-green); font-weight:bold;" onclick="updateIDAttempts('${idKey}', 1)">+1</button>
-                    <button class="action-icon-btn" style="color:var(--bomb-red); font-weight:bold;" onclick="updateIDAttempts('${idKey}', -1)">-1</button>
-                </td>
-                <td><button class="action-icon-btn" onclick="deleteSingleID('${idKey}')">❌</button></td>
-            `;
-            tbody.appendChild(tr);
-        });
-    }
-
-    function deleteSingleID(idKey) {
-        let db = getGlobalDB();
-        delete db.ids[idKey];
-        saveGlobalDB(db);
-        renderRomaIDsTable();
-    }
-
-    function checkPass() {
-        let enteredPass = document.getElementById('pass-input').value.trim();
-
-        if (enteredPass === "Romaftw00") {
-            document.getElementById('pass-screen').style.display = 'none';
-            document.getElementById('roma-panel').style.display = 'flex';
-            renderRomaIDsTable();
-            document.getElementById('pass-input').value = '';
-            return;
-        }
-
-        if (enteredPass === FIXED_PASSWORD) {
-            document.getElementById('pass-screen').style.display = 'none';
-            document.getElementById('id-screen').style.display = 'flex';
-            document.getElementById('pass-input').value = '';
-            return;
-        }
-
-        alert("الباسورد الثابت غير صحيح!");
-        document.getElementById('pass-input').value = '';
-    }
-
-    function closeRomaPanel() {
-        document.getElementById('roma-panel').style.display = 'none';
-        document.getElementById('pass-screen').style.display = 'flex';
-    }
-
-    function checkID() { 
-        let idVal = document.getElementById('id-input').value.trim();
-        let db = getGlobalDB();
-        let foundKey = Object.keys(db.ids).find(k => k.trim() === idVal);
-
-        if (idVal.length >= 1 && foundKey) { 
-            activeClientKey = foundKey;
-            if (db.ids[foundKey].attempts === undefined) {
-                db.ids[foundKey].attempts = 3;
-                saveGlobalDB(db);
-            }
-            updateAttemptsHUD();
-            document.getElementById('id-screen').style.display = 'none'; 
-            startServerConnection(); 
-        } else { 
-            alert("عذراً، هذا الـ ID غير مسجل أو غير مفعل من قبل الإدارة!"); 
-        } 
-    }
-
     function startServerConnection() {
         const loadScreen = document.getElementById('loading-screen');
         const portalMsg = document.getElementById('portal-loading-text');
-        
         loadScreen.style.display = 'flex';
 
         let portalSteps = [
@@ -950,9 +959,7 @@
         let idx = 0;
         let pInterval = setInterval(() => {
             idx++;
-            if (idx < portalSteps.length) {
-                portalMsg.innerText = portalSteps[idx];
-            }
+            if (idx < portalSteps.length) portalMsg.innerText = portalSteps[idx];
         }, 900);
 
         setTimeout(() => {
@@ -973,14 +980,7 @@
         const gamePortalMsg = document.getElementById('game-portal-text');
         
         gameLoadScreen.style.display = 'flex';
-        
-        let gameTitles = {
-            'apple': 'Apple 3D 🍎',
-            'gems': 'Gems & Mines 💎',
-            'royal': 'Royal Feast 🍗',
-            'goldmine': 'Wild West Gold ⛏️'
-        };
-
+        let gameTitles = { 'apple': 'Apple 3D 🍎', 'gems': 'Gems & Mines 💎', 'royal': 'Royal Feast 🍗', 'goldmine': 'Wild West Gold ⛏️' };
         gamePortalMsg.innerText = `جاري مزامنة بيئة ${gameTitles[gameName]} مع السيرفر...`;
 
         setTimeout(() => {
@@ -1019,6 +1019,33 @@
         else if(gameName === 'royal') initRoyalGameSetup();
     }
 
+    function runAISimulation(gameName, callback) {
+        if (!consumeAttemptForGame(gameName)) return;
+        const overlay = document.getElementById('ai-sim-overlay');
+        const text = document.getElementById('ai-sim-text');
+        const bar = document.getElementById('ai-sim-bar');
+        
+        overlay.style.display = 'flex';
+        bar.style.width = '0%';
+
+        let steps = ["جاري مزامنة ترددات السيرفر الحي...", "تحليل أنماط التشابك والنيون التلقائي...", "مطابقة النطاق الآمن بنسبة 99.9%...", "تم الاستخراج وتفعيل الواقعية بنجاح!"];
+        let p = 0;
+        let interval = setInterval(() => {
+            p += 25;
+            bar.style.width = p + '%';
+            let stepIdx = Math.min(Math.floor(p / 30), steps.length - 1);
+            text.innerText = steps[stepIdx];
+
+            if (p >= 100) {
+                clearInterval(interval);
+                setTimeout(() => {
+                    overlay.style.display = 'none';
+                    if (callback) callback();
+                }, 250);
+            }
+        }, 180);
+    }
+
     let curAppleRow = 0;
     let appleRowsData = [];
 
@@ -1029,11 +1056,7 @@
         appleRowsData = [];
 
         for (let i = 0; i < 10; i++) {
-            let bombCount = 1;
-            if (i >= 4 && i < 7) bombCount = 2;
-            else if (i >= 7 && i < 9) bombCount = 3;
-            else if (i >= 9) bombCount = 4;
-
+            let bombCount = i >= 9 ? 4 : (i >= 7 ? 3 : (i >= 4 ? 2 : 1));
             let bombs = [];
             while(bombs.length < bombCount) {
                 let r = Math.floor(Math.random() * 5);
@@ -1067,10 +1090,9 @@
                 runAISimulation('apple', () => revealAppleRow(i));
             };
 
-            let randomConf = (98 + Math.random() * 1.8).toFixed(1) + '%';
             const confBadge = document.createElement('div');
             confBadge.className = 'confidence-badge';
-            confBadge.innerText = `دقة: ${randomConf}`;
+            confBadge.innerText = `دقة: ${(98 + Math.random() * 1.8).toFixed(1)}%`;
 
             revealContainer.appendChild(revealBtn);
             revealContainer.appendChild(confBadge);
@@ -1081,7 +1103,6 @@
 
     function revealAppleRow(rowIdx) {
         if (rowIdx !== curAppleRow) return;
-
         playSynthSound('success');
         const wrapper = document.getElementById('apple-row-' + rowIdx);
         const bricks = wrapper.querySelectorAll('.apple-brick');
@@ -1108,12 +1129,9 @@
     }
 
     let gemsBombPositions = [];
-
     function renderGemsGridSetup() {
         const board = document.getElementById('game-board-gems');
         board.innerHTML = "";
-        gemsBombPositions = [];
-
         let allIndices = [];
         for (let idx = 0; idx < 25; idx++) allIndices.push(idx);
         gemsBombPositions = allIndices.sort(() => Math.random() - 0.5).slice(0, 2);
@@ -1125,39 +1143,29 @@
             cell.onclick = () => {
                 playSynthSound('click');
                 hapticFeedback();
-                runAISimulation('gems', () => revealGemsCell(cell, i));
+                runAISimulation('gems', () => {
+                    playSynthSound('success');
+                    if (gemsBombPositions.includes(i)) {
+                        cell.innerText = '💣'; cell.className = 'cell-gem revealed-gem-bomb';
+                    } else {
+                        cell.innerText = '💎'; cell.className = 'cell-gem revealed-gem';
+                    }
+                });
             };
             board.appendChild(cell);
         }
     }
 
-    function revealGemsCell(cell, index) {
-        if (cell.classList.contains('revealed-gem') || cell.classList.contains('revealed-gem-bomb')) return;
-
-        playSynthSound('success');
-        if (gemsBombPositions.includes(index)) {
-            cell.innerText = '💣';
-            cell.className = 'cell-gem revealed-gem-bomb';
-        } else {
-            cell.innerText = '💎';
-            cell.className = 'cell-gem revealed-gem';
-        }
-    }
-
     let royalRowsData = [];
-
     function initRoyalGameSetup() {
         const board = document.getElementById('game-board-royal');
         board.innerHTML = "";
         royalRowsData = [];
-
-        let rowPoisonCounts = [3, 1, 2, 2, 2];
-        rowPoisonCounts.sort(() => Math.random() - 0.5);
+        let rowPoisonCounts = [3, 1, 2, 2, 2].sort(() => Math.random() - 0.5);
 
         for (let r = 0; r < 5; r++) {
-            let poisonCount = rowPoisonCounts[r];
             let rowIndices = [0, 1, 2, 3, 4].map(col => (r * 5) + col);
-            let rowPoisons = rowIndices.sort(() => Math.random() - 0.5).slice(0, poisonCount);
+            let rowPoisons = rowIndices.sort(() => Math.random() - 0.5).slice(0, rowPoisonCounts[r]);
             royalRowsData.push(...rowPoisons);
         }
 
@@ -1168,31 +1176,22 @@
             cell.onclick = () => {
                 playSynthSound('click');
                 hapticFeedback();
-                runAISimulation('royal', () => revealRoyalCell(cell, i));
+                runAISimulation('royal', () => {
+                    playSynthSound('success');
+                    let foods = ["🍗", "🥩", "🍰", "🍕"];
+                    if (royalRowsData.includes(i)) {
+                        cell.innerText = '☠️'; cell.className = 'cell-royal revealed-poison';
+                    } else {
+                        cell.innerText = foods[Math.floor(Math.random() * foods.length)];
+                        cell.className = 'cell-royal revealed-food';
+                    }
+                });
             };
             board.appendChild(cell);
         }
     }
 
-    function revealRoyalCell(cell, index) {
-        if (cell.classList.contains('revealed-food') || cell.classList.contains('revealed-poison')) return;
-
-        playSynthSound('success');
-        const foods = ["🍗", "🥩", "🍰", "🍕"];
-        if (royalRowsData.includes(index)) {
-            cell.innerText = '☠️';
-            cell.className = 'cell-royal revealed-poison';
-        } else {
-            cell.innerText = foods[Math.floor(Math.random() * foods.length)];
-            cell.className = 'cell-royal revealed-food';
-        }
-    }
-
-    let mineMode = 2; 
-    let mineCurrentStep = 0; 
-    const mineTotalSteps = 6; 
-    let mineWinningPaths = []; 
-
+    let mineMode = 2, mineCurrentStep = 0, mineTotalSteps = 6, mineWinningPaths = [];
     function initMineGameSession(selectedMode) {
         mineMode = selectedMode;
         document.getElementById('mineMainMenu').style.display = 'none';
@@ -1205,22 +1204,17 @@
         mineWinningPaths = [];
         document.getElementById('nextSignalBtn').style.display = 'none';
         document.getElementById('mineMessage').innerText = "السكريبت جاهز.. ابدأ من الأسفل للصعود أعلى!";
-
-        for (let i = 0; i < mineTotalSteps; i++) {
-            mineWinningPaths.push(Math.floor(Math.random() * mineMode));
-        }
+        for (let i = 0; i < mineTotalSteps; i++) mineWinningPaths.push(Math.floor(Math.random() * mineMode));
         buildMineLadder();
     }
 
     function buildMineLadder() {
         const ladder = document.getElementById('ladderContainer');
         ladder.innerHTML = "";
-
         for (let i = mineTotalSteps - 1; i >= 0; i--) {
             const row = document.createElement('div');
             row.className = 'row-level';
             row.id = `row-${i}`;
-
             for (let j = 0; j < mineMode; j++) {
                 const box = document.createElement('div');
                 box.className = `mine-box ${i === mineCurrentStep ? 'active' : ''}`;
@@ -1239,7 +1233,6 @@
 
     function revealMineStep(step) {
         if (step !== mineCurrentStep) return;
-
         playSynthSound('success');
         const correctIndex = mineWinningPaths[step];
         const row = document.getElementById(`row-${step}`);
@@ -1248,30 +1241,18 @@
         for (let j = 0; j < boxes.length; j++) {
             boxes[j].onclick = null;
             if (j === correctIndex) {
-                boxes[j].innerHTML = "🪙 ذهب";
-                boxes[j].className = "mine-box revealed-gold";
+                boxes[j].innerHTML = "🪙 ذهب"; boxes[j].className = "mine-box revealed-gold";
             } else {
-                boxes[j].innerHTML = "🧨 ديناميت";
-                boxes[j].className = "mine-box revealed-bomb";
+                boxes[j].innerHTML = "🧨 ديناميت"; boxes[j].className = "mine-box revealed-bomb";
             }
         }
 
         mineCurrentStep++;
         if (mineCurrentStep < mineTotalSteps) {
             document.getElementById('mineMessage').innerText = "ممتاز! اصعد للخطوة التالية للأعلى ⚡";
-            activateMineCurrentStep();
-        } else {
-            document.getElementById('mineMessage').innerText = "وصلت للقمة وتم كشف جميع الخطوات بنجاح! 🏆";
-            document.getElementById('nextSignalBtn').style.display = 'block';
-        }
-        document.getElementById('currentStepText').innerText = Math.min(mineCurrentStep + 1, mineTotalSteps);
-    }
-    
-    function activateMineCurrentStep() {
-        if (mineCurrentStep < mineTotalSteps) {
-            const row = document.getElementById(`row-${mineCurrentStep}`);
-            if (row) {
-                for (let box of row.children) {
+            const nextRow = document.getElementById(`row-${mineCurrentStep}`);
+            if (nextRow) {
+                for (let box of nextRow.children) {
                     box.className = "mine-box active";
                     box.innerText = "🔍 اكشف";
                     box.onclick = () => {
@@ -1281,7 +1262,11 @@
                     };
                 }
             }
+        } else {
+            document.getElementById('mineMessage').innerText = "وصلت للقمة وتم كشف جميع الخطوات بنجاح! 🏆";
+            document.getElementById('nextSignalBtn').style.display = 'block';
         }
+        document.getElementById('currentStepText').innerText = Math.min(mineCurrentStep + 1, mineTotalSteps);
     }
 
     function resetToMineMenu() {
