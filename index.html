@@ -87,8 +87,8 @@
 
         .login-circle-3d {
             background: radial-gradient(circle, rgba(25, 35, 55, 0.95) 0%, rgba(10, 15, 25, 0.98) 100%);
-            width: 320px;
-            height: 320px;
+            width: 340px;
+            height: 340px;
             border-radius: 50%;
             border: 3px solid var(--accent-gold);
             text-align: center;
@@ -113,12 +113,12 @@
         }
 
         .login-circle-3d h2 {
-            font-size: 1.25rem;
+            font-size: 1.2rem;
             letter-spacing: 2px;
             background: linear-gradient(45deg, #fff, var(--accent-gold));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 12px;
+            margin-bottom: 8px;
         }
 
         .login-box {
@@ -138,22 +138,25 @@
 
         input, select {
             width: 100%;
-            padding: 10px;
-            margin: 5px 0;
-            border-radius: 10px;
-            border: 1px solid rgba(255,255,255,0.15);
-            background: rgba(0, 0, 0, 0.7);
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 12px;
+            border: 2px solid rgba(255,255,255,0.2);
+            background: rgba(0, 0, 0, 0.85);
             color: var(--accent-gold);
             text-align: center;
-            font-size: 0.95rem;
+            font-size: 1rem;
             outline: none;
             user-select: text;
             -webkit-user-select: text;
+            pointer-events: auto !important;
+            z-index: 3000;
+            position: relative;
             transition: 0.3s;
         }
         input:focus {
             border-color: var(--accent-gold);
-            box-shadow: 0 0 15px var(--accent-gold);
+            box-shadow: 0 0 20px var(--accent-gold);
         }
         
         .version-tag {
@@ -219,11 +222,11 @@
             background: linear-gradient(135deg, rgba(0,255,204,0.1), rgba(0,212,255,0.1));
             border: 1px dashed var(--accent-gold);
             color: var(--accent-gold);
-            padding: 6px 10px;
-            border-radius: 10px;
-            font-size: 0.8rem;
+            padding: 5px 8px;
+            border-radius: 8px;
+            font-size: 0.75rem;
             font-weight: bold;
-            margin-bottom: 8px;
+            margin-bottom: 5px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -381,10 +384,10 @@
 <div id="pass-screen" class="overlay">
     <div class="login-circle-3d" style="width: 340px; height: 340px;">
         <h2>SECURE ACCESS 🔐</h2>
-        <div class="trial-badge"><span>⚡</span> أدخل الباسورد السري أو الـ ID</div>
-        <input type="text" id="pass-input" placeholder="اكتب أو الصق الباسورد هنا..." autocomplete="off">
+        <div class="trial-badge"><span>⚡</span> الباسورد أو الـ ID</div>
+        <input type="text" id="pass-input" placeholder="اضغط هنا ثم الصق الباسورد..." autocomplete="off">
         <button class="btn-3d" style="background:var(--accent-gold); margin-top: 10px;" onclick="playSynthSound('click'); hapticFeedback(); checkMainLogin()">دخول النظام</button>
-        <div class="version-tag">SYSTEM v10.2 (Master Secure)</div>
+        <div class="version-tag">SYSTEM v10.3 (Paste Fix)</div>
     </div>
 </div>
 
@@ -403,7 +406,7 @@
         <!-- المربع الثاني: توليد لينكات 3 محاولات جاهزة تحت الـ ID -->
         <div style="background: rgba(0,212,255,0.05); border: 1px solid var(--blue); border-radius: 10px; padding: 10px; margin-bottom: 8px; text-align: right;">
             <div style="font-size: 0.78rem; color: var(--blue); font-weight: bold; margin-bottom: 4px;">2️⃣ توليد رابط بـ (3 محاولات جاهزة للعميل)</div>
-            <input type="text" id="client-id-for-link" placeholder="أدخل رقم الـ ID للعميل" style="font-size: 0.78rem; padding: 6px;">
+            <input type="text" id="client-id-for-link" placeholder="أدخل رقم الـ ID للعميل" style="font-size: 0.78rem; padding: 8px;">
             <button class="btn-3d" style="background: var(--blue); color: #05070a; padding: 7px; font-size: 0.78rem; margin-top: 4px;" onclick="playSynthSound('success'); hapticFeedback(); generateClientPresetLink()">نسخ رابط 3 محاولات جاهز 📋</button>
             <div id="preset-link-box" style="font-size: 0.68rem; color: #aaa; margin-top: 4px; word-break: break-all;"></div>
         </div>
@@ -418,10 +421,10 @@
         <!-- المربع الرابع: لوحة المالك لإدارة الأيديهات وإضافتها يدوياً -->
         <div style="background: rgba(255,0,85,0.05); border: 1px solid var(--bomb-red); border-radius: 10px; padding: 10px; text-align: right;">
             <div style="font-size: 0.78rem; color: var(--bomb-red); font-weight: bold; margin-bottom: 4px;">4️⃣ لوحة المالك (إضافة وإدارة الأيديهات يدوياً)</div>
-            <input type="text" id="new-id-input" placeholder="رقم الـ ID الشخصي" style="font-size: 0.78rem; padding: 6px;">
+            <input type="text" id="new-id-input" placeholder="رقم الـ ID الشخصي" style="font-size: 0.78rem; padding: 8px;">
             <div style="display: flex; gap: 6px; margin-top: 3px; align-items: center;">
                 <span style="font-size: 0.72rem; color: #aaa;">المحاولات:</span>
-                <select id="new-id-attempts" style="margin: 0; padding: 3px; font-size: 0.78rem;">
+                <select id="new-id-attempts" style="margin: 0; padding: 6px; font-size: 0.78rem;">
                     <option value="0">0 محاولات</option>
                     <option value="1">1 محاولة</option>
                     <option value="3" selected>3 محاولات</option>
@@ -501,7 +504,7 @@
             </div>
         </div>
 
-        <div class="version-tag" style="position: relative; margin-top: 5px;">MULTI-GAME LOBBY v10.2</div>
+        <div class="version-tag" style="position: relative; margin-top: 5px;">MULTI-GAME LOBBY v10.3</div>
     </div>
 </div>
 
@@ -798,7 +801,6 @@
         }
     }
 
-    // المربع 1: رابط ساعة مؤقت بالباسورد
     function generateTimedSessionLink() {
         let expiryTime = Date.now() + (60 * 60 * 1000);
         let currentUrl = window.location.href.split('?')[0];
@@ -808,7 +810,6 @@
         alert("تم نسخ رابط الساعة المؤقت بنجاح! 📋");
     }
 
-    // المربع 2: رابط بـ 3 محاولات جاهزة للعميل تحت خانة الـ ID
     function generateClientPresetLink() {
         let idVal = document.getElementById('client-id-for-link').value.trim();
         let expiryTime = Date.now() + (24 * 60 * 60 * 1000);
@@ -819,7 +820,6 @@
         alert("تم نسخ رابط الـ 3 محاولات الجاهز للعميل بنجاح! 📋");
     }
 
-    // المربع 3: كود تجريبي بـ (صفر محاولات) للتأكيد
     function generateZeroAttemptCode() {
         let randomCode = Math.floor(100000 + Math.random() * 900000).toString();
         let db = getGlobalDB();
@@ -831,7 +831,6 @@
         alert(`تم توليد كود الـ (0 محاولات) بنجاح: ${randomCode}`);
     }
 
-    // المربع 4: حفظ الإي دي يدوياً
     function saveClientMapping() {
         let idVal = document.getElementById('new-id-input').value.trim();
         let attVal = parseInt(document.getElementById('new-id-attempts').value);
