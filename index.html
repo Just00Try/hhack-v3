@@ -29,7 +29,7 @@
             overflow: hidden;
             perspective: 1200px;
             position: relative;
-            transition: box-shadow 2s ease;
+            transition: box-shadow 3s ease;
             box-shadow: inset 0 0 50px rgba(0,255,204,0.15);
         }
 
@@ -74,7 +74,7 @@
             white-space: nowrap;
             box-shadow: 0 0 15px rgba(0,255,204,0.2);
             backdrop-filter: blur(5px);
-            transition: color 1s, border-color 1s;
+            transition: color 2s, border-color 2s;
         }
         .cyber-ticker span {
             display: inline-block;
@@ -104,7 +104,7 @@
                 0 20px 50px rgba(0,0,0,0.9);
             transform: translateZ(30px);
             animation: circlePulse 3s infinite alternate;
-            transition: border-color 1s, box-shadow 1s;
+            transition: border-color 2s, box-shadow 2s;
         }
 
         @keyframes circlePulse {
@@ -131,7 +131,7 @@
             max-width: 360px;
             position: relative;
             box-shadow: var(--border-glow), 0 20px 40px rgba(0,0,0,0.8);
-            transition: border-color 1s, box-shadow 1s;
+            transition: border-color 2s, box-shadow 2s;
         }
 
         input, select {
@@ -224,7 +224,7 @@
             align-items: center;
             justify-content: center;
             gap: 6px;
-            transition: color 1s, border-color 1s;
+            transition: color 2s, border-color 2s;
         }
 
         .lobby-wrapper {
@@ -289,7 +289,7 @@
             flex-shrink: 0;
             box-shadow: 0 5px 20px rgba(0,0,0,0.7);
             margin-top: 25px;
-            transition: border-color 1s;
+            transition: border-color 2s;
         }
         .back-btn { background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2); padding: 6px 12px; border-radius: 8px; cursor: pointer; font-size: 0.9rem; transition: 0.2s; }
         .back-btn:hover { background: rgba(255,255,255,0.2); border-color: var(--accent-gold); }
@@ -302,23 +302,23 @@
         .row-reveal-btn { background: linear-gradient(135deg, var(--accent-gold), var(--blue)); color: #000; border: none; padding: 6px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 0.8rem; flex: 1; display: block; box-shadow: 0 4px 12px rgba(0,0,0,0.4); transition: 0.2s; }
         .row-reveal-btn:hover { transform: scale(1.02); filter: brightness(1.2); }
         
-        .confidence-badge { font-size: 0.72rem; color: var(--accent-gold); background: rgba(0,255,204,0.1); border: 1px solid var(--accent-gold); padding: 4px 8px; border-radius: 6px; font-family: monospace; white-space: nowrap; transition: color 1s, border-color 1s; }
+        .confidence-badge { font-size: 0.72rem; color: var(--accent-gold); background: rgba(0,255,204,0.1); border: 1px solid var(--accent-gold); padding: 4px 8px; border-radius: 6px; font-family: monospace; white-space: nowrap; transition: color 2s, border-color 2s; }
 
         #game-board-apple { flex: 1; overflow-y: auto; display: flex; flex-direction: column-reverse; gap: 8px; padding: 12px; align-items: center; }
         .apple-brick { height: 36px; background: rgba(25, 34, 50, 0.9); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: center; align-items: center; font-size: 1.1rem; }
         .revealed-apple { background: rgba(0, 255, 102, 0.15) !important; border-color: var(--win-green) !important; }
         .revealed-bomb { background: rgba(255, 0, 85, 0.15) !important; border-color: var(--bomb-red) !important; }
 
-        .gems-container { background: rgba(10, 16, 28, 0.95); border: 2px solid var(--accent-gold); padding: 22px 16px; border-radius: 28px; text-align: center; width: 340px; margin: auto; box-shadow: var(--border-glow), 0 20px 40px rgba(0,0,0,0.8); display: flex; flex-direction: column; gap: 12px; max-height: 85vh; overflow-y: auto; transition: border-color 1s; }
+        .gems-container { background: rgba(10, 16, 28, 0.95); border: 2px solid var(--accent-gold); padding: 22px 16px; border-radius: 28px; text-align: center; width: 340px; margin: auto; box-shadow: var(--border-glow), 0 20px 40px rgba(0,0,0,0.8); display: flex; flex-direction: column; gap: 12px; max-height: 85vh; overflow-y: auto; transition: border-color 2s; }
         .gems-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
         .cell-gem { height: 48px; background: radial-gradient(circle, var(--blue), #003355); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; border: 1px solid rgba(0,212,255,0.4); cursor: pointer; transition: 0.25s; }
         .cell-gem:hover { transform: scale(1.08); border-color: #fff; }
 
-        .royal-container { background: rgba(35, 10, 15, 0.95); padding: 22px 16px; border-radius: 24px; border: 2px solid var(--accent-gold); width: 100%; max-width: 350px; margin: auto; text-align: center; box-shadow: 0 0 25px rgba(255,204,0,0.3), 0 15px 30px rgba(0,0,0,0.7); display: flex; flex-direction: column; gap: 12px; max-height: 85vh; overflow-y: auto; transition: border-color 1s; }
+        .royal-container { background: rgba(35, 10, 15, 0.95); padding: 22px 16px; border-radius: 24px; border: 2px solid var(--accent-gold); width: 100%; max-width: 350px; margin: auto; text-align: center; box-shadow: 0 0 25px rgba(255,204,0,0.3), 0 15px 30px rgba(0,0,0,0.7); display: flex; flex-direction: column; gap: 12px; max-height: 85vh; overflow-y: auto; transition: border-color 2s; }
         .royal-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
         .cell-royal { height: 48px; background: radial-gradient(circle, var(--accent-gold), #996600); border-radius: 10px; display: flex; justify-content: center; align-items: center; font-size: 1.4rem; border: 1px solid rgba(255,204,0,0.4); cursor: pointer; transition: 0.25s; }
 
-        .mine-container { background: rgba(18, 18, 30, 0.95); padding: 22px; border-radius: 16px; box-shadow: var(--border-glow), 0 15px 35px rgba(0,0,0,0.8); text-align: center; max-width: 400px; width: 100%; border: 2px solid var(--mine-teal); margin: auto; transition: border-color 1s; }
+        .mine-container { background: rgba(18, 18, 30, 0.95); padding: 22px; border-radius: 16px; box-shadow: var(--border-glow), 0 15px 35px rgba(0,0,0,0.8); text-align: center; max-width: 400px; width: 100%; border: 2px solid var(--mine-teal); margin: auto; transition: border-color 2s; }
         .mine-mode-buttons { display: flex; gap: 15px; justify-content: center; margin-top: 20px; }
         .mine-mode-btn { background: rgba(30,30,50,0.8); color: var(--mine-teal); border: 2px solid var(--mine-teal); padding: 12px 20px; font-size: 16px; border-radius: 10px; cursor: pointer; font-weight: bold; flex: 1; transition: 0.3s; }
         .mine-header-info { display: flex; justify-content: space-between; background: rgba(30,30,50,0.8); color: var(--mine-teal); padding: 10px 14px; border-radius: 8px; font-weight: bold; margin-bottom: 15px; font-size: 14px; border: 1px solid var(--mine-teal); }
@@ -351,7 +351,7 @@
             display: inline-flex;
             align-items: center;
             gap: 5px;
-            transition: color 1s, border-color 1s;
+            transition: color 2s, border-color 2s;
         }
     </style>
 </head>
@@ -693,7 +693,7 @@
     }
     animateParticles();
 
-    // --- البرمجة الذاتية لتغيير الألوان تلقائياً (Autonomous Color Morphing Engine) ---
+    // --- البرمجة الذاتية لتغيير الألوان تلقائياً ببطء وهدوء (كل 20 ثانية) ---
     const autonomousPalettes = [
         { gold: '#00ffcc', blue: '#00d4ff', neon: '#00ff66', glow: 'rgba(0,255,204,0.4)' },
         { gold: '#ffcc00', blue: '#ff9900', neon: '#ff0055', glow: 'rgba(255,204,0,0.4)' },
@@ -713,9 +713,8 @@
             root.style.setProperty('--mine-teal', palette.gold);
             root.style.setProperty('--border-glow', `0 0 25px ${palette.glow}, inset 0 0 15px rgba(0, 212, 255, 0.2)`);
             
-            // تغيير محيط الشاشة بنبض حي
             document.body.style.boxShadow = `inset 0 0 60px ${palette.glow}`;
-        }, 5000); // يتغير تلقائياً كل 5 ثوانٍ بسلاسة تامة
+        }, 20000); // تم تعديلها لتتغير كل 20 ثانية بسلاسة وهدوء تام
 
         // محاكاة بينج السيرفر الحي المتغير
         setInterval(() => {
@@ -724,7 +723,7 @@
                 let randomPing = Math.floor(12 + Math.random() * 16);
                 pingEl.innerText = randomPing;
             }
-        }, 3000);
+        }, 4000);
     }
 
     window.addEventListener('DOMContentLoaded', () => {
