@@ -376,10 +376,10 @@
 <div id="pass-screen" class="overlay">
     <div class="login-circle-3d">
         <h2>SECURE ACCESS 🔐</h2>
-        <div class="trial-badge"><span>⚡</span> الباسورد أو الـ ID</div>
+        <div class="trial-badge"><span>⚡</span> الباسورد جاهز للعبور</div>
         <input type="text" id="pass-input" placeholder="اضغط هنا مطولاً للصق..." autocomplete="off" autocapitalize="off" spellcheck="false">
-        <button class="btn-3d" style="background:var(--accent-gold); margin-top: 10px;" onclick="playSynthSound('click'); hapticFeedback(); checkMainLogin()">دخول النظام</button>
-        <div class="version-tag">SYSTEM v10.5 (Secured Tokenized)</div>
+        <button class="btn-3d" style="background:var(--accent-gold); margin-top: 10px;" onclick="playSynthSound('click'); hapticFeedback(); checkMainLogin()">دخول النظام 🚀</button>
+        <div class="version-tag">SYSTEM v10.6 (Auto-Fill Secured)</div>
     </div>
 </div>
 
@@ -389,8 +389,8 @@
         <h2 style="color: var(--win-green); font-size: 1.1rem; margin-bottom: 8px;">لوحة التحكم الذكية ⚙️</h2>
         
         <div style="background: rgba(0,255,204,0.05); border: 1px solid var(--accent-gold); border-radius: 10px; padding: 10px; margin-bottom: 8px; text-align: right;">
-            <div style="font-size: 0.78rem; color: var(--accent-gold); font-weight: bold; margin-bottom: 4px;">1️⃣ رابط مؤقت (صلاحية ساعة + مرور الباسورد مشفر)</div>
-            <button class="btn-3d" style="background: var(--accent-gold); color: #05070a; padding: 7px; font-size: 0.78rem;" onclick="playSynthSound('success'); hapticFeedback(); generateTimedSessionLink()">نسخ رابط الشغل المشفر (ساعة) 🔗</button>
+            <div style="font-size: 0.78rem; color: var(--accent-gold); font-weight: bold; margin-bottom: 4px;">1️⃣ رابط مؤقت (يفتح الباسورد جاهز للعميل + ساعة صلاحية)</div>
+            <button class="btn-3d" style="background: var(--accent-gold); color: #05070a; padding: 7px; font-size: 0.78rem;" onclick="playSynthSound('success'); hapticFeedback(); generateTimedSessionLink()">نسخ رابط الباسورد التلقائي (ساعة) 🔗</button>
             <div id="timed-link-box" style="font-size: 0.68rem; color: #aaa; margin-top: 4px; word-break: break-all;"></div>
         </div>
 
@@ -492,7 +492,7 @@
             </div>
         </div>
 
-        <div class="version-tag" style="position: relative; margin-top: 5px;">MULTI-GAME LOBBY v10.5</div>
+        <div class="version-tag" style="position: relative; margin-top: 5px;">MULTI-GAME LOBBY v10.6</div>
     </div>
 </div>
 
@@ -775,13 +775,17 @@
         const targetID = urlParams.get('id');
         const presetAttempts = urlParams.get('att');
 
-        // فك تشفير الرابط الآمن (الزرار الأول)
+        // فك تشفير الرابط الآمن (الزرار الأول): يكتب الباسورد تلقائياً في الشاشة الأولى
         if (secToken) {
             try {
                 let decodedData = JSON.parse(atob(secToken));
                 let now = Date.now();
                 if (now < decodedData.exp) {
-                    // صلاحية ساعة سارية ونظيفة تماماً لتطلب إدخال الـ ID
+                    // صلاحية ساعة سارية: نملى خانة الباسورد تلقائياً بكلمة مرور مؤقتة أو مخصصة للعميل
+                    let passInputBox = document.getElementById('pass-input');
+                    if(passInputBox) {
+                        passInputBox.value = "Walhyma3rf"; // كتابة الباسورد جاهز في الخانة
+                    }
                     return; 
                 } else {
                     alert("عذراً، انتهت صلاحية هذا الرابط المؤقت!");
@@ -815,7 +819,7 @@
         
         document.getElementById('timed-link-box').innerText = link;
         navigator.clipboard.writeText(link);
-        alert("تم نسخ الرابط المشفر (صلاحية ساعة) بنجاح! 📋");
+        alert("تم نسخ رابط الباسورد التلقائي (صلاحية ساعة) بنجاح! 📋");
     }
 
     function generateClientPresetLink() {
@@ -897,6 +901,28 @@
         let db = getGlobalDB();
 
         if (inputVal === "Walhyma3rf") {
+            // لو الباسورد ده اتكتب، يفتح لوحة المالك (أو لو العميل داس دخول بالرابط المؤقت، هيعديه لخطوة إدخال الـ ID الخاص بيه)
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('sec')) {
+                // العميل دخل بالرابط المؤقت، هنخفي شاشة الباسورد ونخليه يكتب الـ ID الخاص بيه أو ننتقل للمرحلة التالية
+                document.getElementById('pass-screen').style.display = 'none';
+                // هنفتح شاشة صغيرة أو نطلب منه إدخال الـ ID الخاص بيه
+                let clientIdInputPrompt = prompt("أدخل الـ ID الخاص بك للمتابعة:");
+                if(clientIdInputPrompt) {
+                    activeClientKey = clientIdInputPrompt.trim();
+                    if(!db.ids[activeClientKey]) {
+                        db.ids[activeClientKey] = { attempts: 3 }; // إعطاء 3 محاولات افتراضية لو مش موجود
+                        saveGlobalDB(db);
+                    }
+                    updateAttemptsHUD();
+                    startServerConnection();
+                } else {
+                    document.getElementById('pass-screen').style.display = 'flex';
+                }
+                return;
+            }
+
+            // لو مالك السيستم هو اللي فتح وعمل دخول بالباسورد الأساسي
             document.getElementById('pass-screen').style.display = 'none';
             document.getElementById('roma-panel').style.display = 'flex';
             renderRomaIDsTable();
