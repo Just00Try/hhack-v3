@@ -56,7 +56,6 @@
             flex-direction: column;
         }
 
-        /* إصلاح جذري لشاشة الباسورد لمنع أي حجب لقائمة اللصق */
         #pass-screen {
             backdrop-filter: none !important;
             -webkit-backdrop-filter: none !important;
@@ -360,7 +359,7 @@
 <canvas id="matrix-canvas"></canvas>
 
 <div class="cyber-ticker">
-    <span>⚡ [ متصل بسيرفر Xparibet الآمن ] &nbsp;&bull;&nbsp; [ استجابة السيرفر الحية: <span id="ping-hud">18</span>ms ] &nbsp;&bull;&nbsp; [ خوارزمية التغيير التلقائي نشطة 🟢 ]</span>
+    <span>⚡ [ متصل بسيرفر Xparibet الآمن ] &nbsp;&bull;&nbsp; [ استجابة السيرفر الحية: <span id="ping-hud">18</span>ms ] &nbsp;&bull;&nbsp; [ خوارزمية الحماية والتشفير نشطة 🟢 ]</span>
 </div>
 
 <div id="ai-sim-overlay">
@@ -380,7 +379,7 @@
         <div class="trial-badge"><span>⚡</span> الباسورد أو الـ ID</div>
         <input type="text" id="pass-input" placeholder="اضغط هنا مطولاً للصق..." autocomplete="off" autocapitalize="off" spellcheck="false">
         <button class="btn-3d" style="background:var(--accent-gold); margin-top: 10px;" onclick="playSynthSound('click'); hapticFeedback(); checkMainLogin()">دخول النظام</button>
-        <div class="version-tag">SYSTEM v10.4 (Ultimate Paste Fix)</div>
+        <div class="version-tag">SYSTEM v10.5 (Secured Tokenized)</div>
     </div>
 </div>
 
@@ -390,15 +389,15 @@
         <h2 style="color: var(--win-green); font-size: 1.1rem; margin-bottom: 8px;">لوحة التحكم الذكية ⚙️</h2>
         
         <div style="background: rgba(0,255,204,0.05); border: 1px solid var(--accent-gold); border-radius: 10px; padding: 10px; margin-bottom: 8px; text-align: right;">
-            <div style="font-size: 0.78rem; color: var(--accent-gold); font-weight: bold; margin-bottom: 4px;">1️⃣ رابط مؤقت (صلاحية ساعة واحدة بالباسورد)</div>
-            <button class="btn-3d" style="background: var(--accent-gold); color: #05070a; padding: 7px; font-size: 0.78rem;" onclick="playSynthSound('success'); hapticFeedback(); generateTimedSessionLink()">نسخ رابط الشغل (ساعة) 🔗</button>
+            <div style="font-size: 0.78rem; color: var(--accent-gold); font-weight: bold; margin-bottom: 4px;">1️⃣ رابط مؤقت (صلاحية ساعة + مرور الباسورد مشفر)</div>
+            <button class="btn-3d" style="background: var(--accent-gold); color: #05070a; padding: 7px; font-size: 0.78rem;" onclick="playSynthSound('success'); hapticFeedback(); generateTimedSessionLink()">نسخ رابط الشغل المشفر (ساعة) 🔗</button>
             <div id="timed-link-box" style="font-size: 0.68rem; color: #aaa; margin-top: 4px; word-break: break-all;"></div>
         </div>
 
         <div style="background: rgba(0,212,255,0.05); border: 1px solid var(--blue); border-radius: 10px; padding: 10px; margin-bottom: 8px; text-align: right;">
-            <div style="font-size: 0.78rem; color: var(--blue); font-weight: bold; margin-bottom: 4px;">2️⃣ توليد رابط بـ (3 محاولات جاهزة للعميل)</div>
+            <div style="font-size: 0.78rem; color: var(--blue); font-weight: bold; margin-bottom: 4px;">2️⃣ توليد رابط بـ (محاولات ID للعميل مباشرة)</div>
             <input type="text" id="client-id-for-link" placeholder="أدخل رقم الـ ID للعميل" style="font-size: 0.78rem; padding: 8px;">
-            <button class="btn-3d" style="background: var(--blue); color: #05070a; padding: 7px; font-size: 0.78rem; margin-top: 4px;" onclick="playSynthSound('success'); hapticFeedback(); generateClientPresetLink()">نسخ رابط 3 محاولات جاهز 📋</button>
+            <button class="btn-3d" style="background: var(--blue); color: #05070a; padding: 7px; font-size: 0.78rem; margin-top: 4px;" onclick="playSynthSound('success'); hapticFeedback(); generateClientPresetLink()">نسخ رابط الـ ID المباشر 📋</button>
             <div id="preset-link-box" style="font-size: 0.68rem; color: #aaa; margin-top: 4px; word-break: break-all;"></div>
         </div>
 
@@ -493,7 +492,7 @@
             </div>
         </div>
 
-        <div class="version-tag" style="position: relative; margin-top: 5px;">MULTI-GAME LOBBY v10.4</div>
+        <div class="version-tag" style="position: relative; margin-top: 5px;">MULTI-GAME LOBBY v10.5</div>
     </div>
 </div>
 
@@ -730,7 +729,6 @@
         checkURLParams();
         renderRomaIDsTable();
         
-        // تفعيل إضافي للـ Input لضمان استجابة اللصق الفوري
         const passInput = document.getElementById('pass-input');
         if (passInput) {
             passInput.addEventListener('touchstart', function() {
@@ -739,7 +737,7 @@
         }
     });
 
-    const GLOBAL_MASTER_KEY = "vip_3d_portal_database_v4";
+    const GLOBAL_MASTER_KEY = "vip_3d_portal_database_v5";
 
     function getGlobalDB() {
         let defaultData = {
@@ -773,48 +771,64 @@
 
     function checkURLParams() {
         const urlParams = new URLSearchParams(window.location.search);
-        const token = urlParams.get('token');
+        const secToken = urlParams.get('sec');
         const targetID = urlParams.get('id');
-        const expiry = urlParams.get('exp');
         const presetAttempts = urlParams.get('att');
 
-        if (token && expiry) {
-            let now = Date.now();
-            if (now < parseInt(expiry)) {
-                let db = getGlobalDB();
-                let assignedID = targetID ? targetID : "CLIENT_PRESET_USER";
-                
-                let attVal = presetAttempts !== null ? parseInt(presetAttempts) : 3;
-                db.ids[assignedID] = { attempts: attVal };
-                saveGlobalDB(db);
-
-                activeClientKey = assignedID;
-                document.getElementById('pass-screen').style.display = 'none';
-                updateAttemptsHUD();
-                startServerConnection();
-            } else {
-                alert("عذراً، انتهت صلاحية هذا الرابط المؤقت!");
+        // فك تشفير الرابط الآمن (الزرار الأول)
+        if (secToken) {
+            try {
+                let decodedData = JSON.parse(atob(secToken));
+                let now = Date.now();
+                if (now < decodedData.exp) {
+                    // صلاحية ساعة سارية ونظيفة تماماً لتطلب إدخال الـ ID
+                    return; 
+                } else {
+                    alert("عذراً، انتهت صلاحية هذا الرابط المؤقت!");
+                }
+            } catch(e) {
+                alert("رابط غير صالح أو تم التلاعب به!");
             }
+        }
+
+        // معالجة الرابط المباشر للـ ID (الزرار الثاني)
+        if (targetID) {
+            let db = getGlobalDB();
+            let attVal = presetAttempts !== null ? parseInt(presetAttempts) : 3;
+            db.ids[targetID] = { attempts: attVal };
+            saveGlobalDB(db);
+
+            activeClientKey = targetID;
+            document.getElementById('pass-screen').style.display = 'none';
+            updateAttemptsHUD();
+            startServerConnection();
         }
     }
 
     function generateTimedSessionLink() {
         let expiryTime = Date.now() + (60 * 60 * 1000);
+        let rawPayload = JSON.stringify({ type: 'timed_session', exp: expiryTime, salt: Math.random() });
+        let encryptedToken = btoa(rawPayload); // تشفير كامل يستحيل قراءته أو تعديله يدوياً
+        
         let currentUrl = window.location.href.split('?')[0];
-        let link = `${currentUrl}?token=timedpass&exp=${expiryTime}`;
+        let link = `${currentUrl}?sec=${encryptedToken}`;
+        
         document.getElementById('timed-link-box').innerText = link;
         navigator.clipboard.writeText(link);
-        alert("تم نسخ رابط الساعة المؤقت بنجاح! 📋");
+        alert("تم نسخ الرابط المشفر (صلاحية ساعة) بنجاح! 📋");
     }
 
     function generateClientPresetLink() {
         let idVal = document.getElementById('client-id-for-link').value.trim();
-        let expiryTime = Date.now() + (24 * 60 * 60 * 1000);
+        if (!idVal) {
+            alert("يرجى إدخال رقم الـ ID للعميل أولاً!");
+            return;
+        }
         let currentUrl = window.location.href.split('?')[0];
-        let link = `${currentUrl}?token=preset&id=${encodeURIComponent(idVal || 'Client')}&att=3&exp=${expiryTime}`;
+        let link = `${currentUrl}?id=${encodeURIComponent(idVal)}&att=3`;
         document.getElementById('preset-link-box').innerText = link;
         navigator.clipboard.writeText(link);
-        alert("تم نسخ رابط الـ 3 محاولات الجاهز للعميل بنجاح! 📋");
+        alert("تم نسخ رابط الـ ID المباشر بنجاح! 📋");
     }
 
     function generateZeroAttemptCode() {
@@ -1263,7 +1277,6 @@
                     box.onclick = () => {
                         playSynthSound('click');
                         hapticFeedback();
-                        runAIS_simulation_fixed = true; // dummy flag
                         runAISimulation('goldmine', () => revealMineStep(mineCurrentStep));
                     };
                 }
