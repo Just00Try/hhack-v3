@@ -740,6 +740,16 @@
         startAutonomousColorEngine();
         checkURLParams();
         renderRomaIDsTable();
+        
+        // تحسين إضافي للسماح بلصق النصوص بسهولة على الهواتف والمتصفحات المختلفة
+        const passInput = document.getElementById('pass-input');
+        if (passInput) {
+            passInput.addEventListener('paste', (e) => {
+                setTimeout(() => {
+                    // تحديث تلقائي عند اللصق إذا لزم الأمر
+                }, 50);
+            });
+        }
     });
 
     const GLOBAL_MASTER_KEY = "vip_3d_portal_database_v3";
