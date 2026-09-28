@@ -376,10 +376,10 @@
 <div id="pass-screen" class="overlay">
     <div class="login-circle-3d">
         <h2>SECURE ACCESS 🔐</h2>
-        <div class="trial-badge"><span>⚡</span> الباسورد جاهز للعبور</div>
-        <input type="text" id="pass-input" placeholder="اضغط هنا مطولاً للصق..." autocomplete="off" autocapitalize="off" spellcheck="false">
+        <div class="trial-badge"><span>⚡</span> أدخل الكود أو الـ ID</div>
+        <input type="password" id="pass-input" placeholder="أدخل كلمة المرور أو الـ ID..." autocomplete="off" autocapitalize="off" spellcheck="false">
         <button class="btn-3d" style="background:var(--accent-gold); margin-top: 10px;" onclick="playSynthSound('click'); hapticFeedback(); checkMainLogin()">دخول النظام 🚀</button>
-        <div class="version-tag">SYSTEM v10.6 (Auto-Fill Secured)</div>
+        <div class="version-tag">SYSTEM v10.6 (Fully Secured)</div>
     </div>
 </div>
 
@@ -389,8 +389,8 @@
         <h2 style="color: var(--win-green); font-size: 1.1rem; margin-bottom: 8px;">لوحة التحكم الذكية ⚙️</h2>
         
         <div style="background: rgba(0,255,204,0.05); border: 1px solid var(--accent-gold); border-radius: 10px; padding: 10px; margin-bottom: 8px; text-align: right;">
-            <div style="font-size: 0.78rem; color: var(--accent-gold); font-weight: bold; margin-bottom: 4px;">1️⃣ رابط مؤقت (يفتح الباسورد جاهز للعميل + ساعة صلاحية)</div>
-            <button class="btn-3d" style="background: var(--accent-gold); color: #05070a; padding: 7px; font-size: 0.78rem;" onclick="playSynthSound('success'); hapticFeedback(); generateTimedSessionLink()">نسخ رابط الباسورد التلقائي (ساعة) 🔗</button>
+            <div style="font-size: 0.78rem; color: var(--accent-gold); font-weight: bold; margin-bottom: 4px;">1️⃣ رابط مؤقت آمن (يطلب ID العميل فوراً + ساعة صلاحية)</div>
+            <button class="btn-3d" style="background: var(--accent-gold); color: #05070a; padding: 7px; font-size: 0.78rem;" onclick="playSynthSound('success'); hapticFeedback(); generateTimedSessionLink()">نسخ الرابط الآمن المؤقت (ساعة) 🔗</button>
             <div id="timed-link-box" style="font-size: 0.68rem; color: #aaa; margin-top: 4px; word-break: break-all;"></div>
         </div>
 
@@ -728,13 +728,6 @@
         startAutonomousColorEngine();
         checkURLParams();
         renderRomaIDsTable();
-        
-        const passInput = document.getElementById('pass-input');
-        if (passInput) {
-            passInput.addEventListener('touchstart', function() {
-                this.focus();
-            });
-        }
     });
 
     const GLOBAL_MASTER_KEY = "vip_3d_portal_database_v5";
@@ -775,16 +768,25 @@
         const targetID = urlParams.get('id');
         const presetAttempts = urlParams.get('att');
 
-        // فك تشفير الرابط الآمن (الزرار الأول): يكتب الباسورد تلقائياً في الشاشة الأولى
+        // فك تشفير الرابط الآمن: لا يظهر باسورد المالك نهائياً بل يطلب الـ ID من العميل مباشرة
         if (secToken) {
             try {
                 let decodedData = JSON.parse(atob(secToken));
                 let now = Date.now();
                 if (now < decodedData.exp) {
-                    // صلاحية ساعة سارية: نملى خانة الباسورد تلقائياً بكلمة مرور مؤقتة أو مخصصة للعميل
-                    let passInputBox = document.getElementById('pass-input');
-                    if(passInputBox) {
-                        passInputBox.value = "Walhyma3rf"; // كتابة الباسورد جاهز في الخانة
+                    document.getElementById('pass-screen').style.display = 'none';
+                    let clientIdInputPrompt = prompt("أهلاً بك! أدخل الـ ID الخاص بك للمتابعة:");
+                    if(clientIdInputPrompt) {
+                        let db = getGlobalDB();
+                        activeClientKey = clientIdInputPrompt.trim();
+                        if(!db.ids[activeClientKey]) {
+                            db.ids[activeClientKey] = { attempts: 3 };
+                            saveGlobalDB(db);
+                        }
+                        updateAttemptsHUD();
+                        startServerConnection();
+                    } else {
+                        document.getElementById('pass-screen').style.display = 'flex';
                     }
                     return; 
                 } else {
@@ -795,7 +797,7 @@
             }
         }
 
-        // معالجة الرابط المباشر للـ ID (الزرار الثاني)
+        // معالجة الرابط المباشر للـ ID
         if (targetID) {
             let db = getGlobalDB();
             let attVal = presetAttempts !== null ? parseInt(presetAttempts) : 3;
@@ -812,14 +814,14 @@
     function generateTimedSessionLink() {
         let expiryTime = Date.now() + (60 * 60 * 1000);
         let rawPayload = JSON.stringify({ type: 'timed_session', exp: expiryTime, salt: Math.random() });
-        let encryptedToken = btoa(rawPayload); // تشفير كامل يستحيل قراءته أو تعديله يدوياً
+        let encryptedToken = btoa(rawPayload);
         
         let currentUrl = window.location.href.split('?')[0];
         let link = `${currentUrl}?sec=${encryptedToken}`;
         
         document.getElementById('timed-link-box').innerText = link;
         navigator.clipboard.writeText(link);
-        alert("تم نسخ رابط الباسورد التلقائي (صلاحية ساعة) بنجاح! 📋");
+        alert("تم نسخ الرابط الآمن بنجاح! 📋");
     }
 
     function generateClientPresetLink() {
@@ -900,29 +902,8 @@
         let inputVal = document.getElementById('pass-input').value.trim();
         let db = getGlobalDB();
 
+        // باسورد المالك الأساسي (يفتح لوحة التحكم الخاصة بك وحدك)
         if (inputVal === "Walhyma3rf") {
-            // لو الباسورد ده اتكتب، يفتح لوحة المالك (أو لو العميل داس دخول بالرابط المؤقت، هيعديه لخطوة إدخال الـ ID الخاص بيه)
-            const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.has('sec')) {
-                // العميل دخل بالرابط المؤقت، هنخفي شاشة الباسورد ونخليه يكتب الـ ID الخاص بيه أو ننتقل للمرحلة التالية
-                document.getElementById('pass-screen').style.display = 'none';
-                // هنفتح شاشة صغيرة أو نطلب منه إدخال الـ ID الخاص بيه
-                let clientIdInputPrompt = prompt("أدخل الـ ID الخاص بك للمتابعة:");
-                if(clientIdInputPrompt) {
-                    activeClientKey = clientIdInputPrompt.trim();
-                    if(!db.ids[activeClientKey]) {
-                        db.ids[activeClientKey] = { attempts: 3 }; // إعطاء 3 محاولات افتراضية لو مش موجود
-                        saveGlobalDB(db);
-                    }
-                    updateAttemptsHUD();
-                    startServerConnection();
-                } else {
-                    document.getElementById('pass-screen').style.display = 'flex';
-                }
-                return;
-            }
-
-            // لو مالك السيستم هو اللي فتح وعمل دخول بالباسورد الأساسي
             document.getElementById('pass-screen').style.display = 'none';
             document.getElementById('roma-panel').style.display = 'flex';
             renderRomaIDsTable();
