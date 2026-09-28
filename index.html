@@ -734,10 +734,7 @@
 
     function getGlobalDB() {
         let defaultData = {
-            ids: { 
-                "123456": { attempts: 3 },
-                "1690313233": { attempts: 3 }
-            },
+            ids: {},
             tempPasses: {}
         };
         let stored = localStorage.getItem(GLOBAL_MASTER_KEY);
@@ -768,7 +765,6 @@
         const targetID = urlParams.get('id');
         const presetAttempts = urlParams.get('att');
 
-        // فك تشفير الرابط الآمن: لا يظهر باسورد المالك نهائياً بل يطلب الـ ID من العميل مباشرة
         if (secToken) {
             try {
                 let decodedData = JSON.parse(atob(secToken));
@@ -797,7 +793,6 @@
             }
         }
 
-        // معالجة الرابط المباشر للـ ID
         if (targetID) {
             let db = getGlobalDB();
             let attVal = presetAttempts !== null ? parseInt(presetAttempts) : 3;
@@ -902,7 +897,6 @@
         let inputVal = document.getElementById('pass-input').value.trim();
         let db = getGlobalDB();
 
-        // باسورد المالك الأساسي (يفتح لوحة التحكم الخاصة بك وحدك)
         if (inputVal === "Walhyma3rf") {
             document.getElementById('pass-screen').style.display = 'none';
             document.getElementById('roma-panel').style.display = 'flex';
