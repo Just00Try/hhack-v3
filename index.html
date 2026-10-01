@@ -538,7 +538,7 @@
     <div id="game-goldmine" class="game-section" style="display:none; flex-direction:column; height:100%;">
         <div class="header">
             <button class="back-btn" onclick="playSynthSound('click'); hapticFeedback(); returnToLobby()">⬅ القائمة</button>
-            <span>Wild West Gold ⛏️</span>
+            <span>Wild West Gold ⛏️️</span>
             <div id="game-attempts-hud-gold" class="timer-hud">🎮 3</div>
         </div>
         <div style="flex:1; display:flex; justify-content:center; align-items:center; background:rgba(18,12,8,0.6); padding: 10px;">
@@ -1172,7 +1172,7 @@
                     playSynthSound('success');
                     let foods = ["🍗", "🥩", "🍰", "🍕"];
                     if (royalRowsData.includes(i)) {
-                        cell.innerText = '☠️️'; cell.className = 'cell-royal revealed-poison';
+                        cell.innerText = '☠'; cell.className = 'cell-royal revealed-poison';
                     } else {
                         cell.innerText = foods[Math.floor(Math.random() * foods.length)];
                         cell.className = 'cell-royal revealed-food';
