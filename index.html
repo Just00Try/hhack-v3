@@ -89,29 +89,31 @@
             100% { transform: translateX(-100%); }
         }
 
-        .login-circle-3d {
-            background: radial-gradient(circle, rgba(25, 35, 55, 0.98) 0%, rgba(10, 15, 25, 1) 100%);
-            width: 340px;
-            height: 340px;
-            border-radius: 50%;
-            border: 3px solid var(--accent-gold);
+        /* تعديل البطاقة لتشمل الصورة كخلفية فخمة */
+        .login-card-bg {
+            background: linear-gradient(rgba(5, 7, 10, 0.75), rgba(5, 7, 10, 0.88)), url('1000141673.jpg');
+            background-size: cover;
+            background-position: center;
+            width: 90%;
+            max-width: 380px;
+            border-radius: 24px;
+            border: 2px solid var(--accent-gold);
             text-align: center;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 35px;
+            padding: 35px 20px;
             position: relative;
-            overflow: visible !important;
             box-shadow: 
                 0 0 40px var(--accent-gold),
-                inset 0 0 25px rgba(0, 255, 204, 0.4),
+                inset 0 0 25px rgba(0, 255, 204, 0.2),
                 0 20px 50px rgba(0,0,0,0.9);
             transform: translateZ(30px);
             z-index: 9999;
         }
 
-        .login-circle-3d h2 {
+        .login-card-bg h2 {
             font-size: 1.2rem;
             letter-spacing: 2px;
             background: linear-gradient(45deg, #fff, var(--accent-gold));
@@ -372,9 +374,9 @@
     </div>
 </div>
 
-<!-- شاشة تسجيل الدخول الأولى -->
+<!-- شاشة تسجيل الدخول الأولى (تم تحديثها بالبطاقة الجديدة وصورة الخلفية) -->
 <div id="pass-screen" class="overlay">
-    <div class="login-circle-3d">
+    <div class="login-card-bg">
         <h2>SECURE ACCESS 🔐</h2>
         <div class="trial-badge"><span>⚡</span> أدخل الكود أو الـ ID</div>
         <input type="password" id="pass-input" placeholder="أدخل كلمة المرور أو الـ ID..." autocomplete="off" autocapitalize="off" spellcheck="false">
@@ -538,7 +540,7 @@
     <div id="game-goldmine" class="game-section" style="display:none; flex-direction:column; height:100%;">
         <div class="header">
             <button class="back-btn" onclick="playSynthSound('click'); hapticFeedback(); returnToLobby()">⬅ القائمة</button>
-            <span>Wild West Gold ⛏️️</span>
+            <span>Wild West Gold ⛏</span>
             <div id="game-attempts-hud-gold" class="timer-hud">🎮 3</div>
         </div>
         <div style="flex:1; display:flex; justify-content:center; align-items:center; background:rgba(18,12,8,0.6); padding: 10px;">
