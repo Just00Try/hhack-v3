@@ -25,7 +25,6 @@
             color: #fff;
         }
 
-        /* خلفية الإضاءة الكونية الحية المتغيرة */
         .cosmic-bg {
             position: fixed; inset: 0; z-index: 1; pointer-events: none;
             background: radial-gradient(circle at 50% 20%, rgba(0, 240, 255, 0.12) 0%, transparent 60%),
@@ -59,7 +58,6 @@
         }
         @keyframes tickerSlide { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
 
-        /* كارت تسجيل الدخول بهيئة خزنة مستقبلية */
         .login-card {
             background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(3, 7, 18, 0.98));
             width: 88%; max-width: 360px; padding: 30px 20px;
@@ -91,7 +89,6 @@
         }
         .cyber-btn:active { transform: scale(0.96); box-shadow: 0 0 10px var(--neon-blue); }
 
-        /* تواصل الشركات الاحترافي */
         .contact-section {
             margin-top: 18px; padding-top: 12px;
             border-top: 1px solid rgba(0, 240, 255, 0.25);
@@ -108,11 +105,9 @@
         .logo-item.telegram { background: rgba(0,136,204,0.15); border: 1px solid #0088cc; color: #0088cc; }
         .logo-item:active { transform: scale(0.9); }
 
-        /* الكروت الهولوغرامية ثلاثية الأبعاد */
         .carousel-container {
             width: 100%; height: 340px;
             position: relative; display: flex; justify-content: center; align-items: center; margin-top: 10px;
-            perspective: 1000px;
         }
         .carousel-wheel { width: 230px; height: 300px; position: relative; }
         
@@ -124,18 +119,11 @@
             box-shadow: 0 0 30px rgba(0, 240, 255, 0.2);
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             padding: 20px; gap: 15px; cursor: pointer;
-            opacity: 0; transform: scale(0.8) rotateX(10deg); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0; transform: scale(0.9); transition: opacity 0.25s ease, transform 0.25s ease;
             pointer-events: none;
-            overflow: hidden;
-        }
-        /* لمعة الهولوغرام الزجاجية فوق الكارت */
-        .carousel-card::after {
-            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-            background: linear-gradient(45deg, transparent 45%, rgba(255,255,255,0.08) 50%, transparent 55%);
-            transform: rotate(25deg); pointer-events: none;
         }
         .carousel-card.active {
-            opacity: 1; transform: scale(1) rotateX(0deg); pointer-events: auto;
+            opacity: 1; transform: scale(1); pointer-events: auto;
             border-color: var(--neon-green); box-shadow: 0 0 40px rgba(0, 255, 102, 0.35);
         }
         .game-icon-large { font-size: 4.5rem; filter: drop-shadow(0 0 15px var(--neon-blue)); }
@@ -150,17 +138,12 @@
             box-shadow: 0 0 15px rgba(0,240,255,0.3);
         }
 
-        /* تأثير الـ Glitch و الانقضاض الكمومي عند فتح اللعبة */
         @keyframes quantumGlitch {
-            0% { transform: scale(1) skew(0deg); filter: hue-rotate(0deg); }
-            20% { transform: scale(1.02) skew(2deg); filter: hue-rotate(90deg); opacity: 0.8; }
-            40% { transform: scale(0.98) skew(-2deg); filter: hue-rotate(180deg); opacity: 0.9; }
-            60% { transform: scale(1.01) skew(1deg); filter: hue-rotate(270deg); }
-            100% { transform: scale(1) skew(0deg); filter: hue-rotate(360deg); }
+            0% { transform: scale(1); filter: hue-rotate(0deg); }
+            50% { transform: scale(1.02); filter: hue-rotate(180deg); opacity: 0.8; }
+            100% { transform: scale(1); filter: hue-rotate(360deg); }
         }
-        .quantum-effect {
-            animation: quantumGlitch 0.4s ease-in-out;
-        }
+        .quantum-effect { animation: quantumGlitch 0.3s ease-in-out; }
 
         .radar-box {
             width: 100px; height: 100px; border-radius: 50%;
@@ -199,9 +182,7 @@
             height: 50px; background: rgba(15, 23, 42, 0.95);
             border: 1px solid rgba(0, 240, 255, 0.35); border-radius: 12px;
             display: flex; align-items: center; justify-content: center; font-size: 1.4rem; cursor: pointer;
-            transition: 0.2s;
         }
-        .grid-cell:active { transform: scale(0.92); }
 
         .apple-board { flex: 1; display: flex; flex-direction: column-reverse; gap: 7px; padding: 12px; overflow-y: auto; align-items: center; }
         .apple-row { display: flex; gap: 7px; align-items: center; width: 100%; max-width: 340px; opacity: 0.35; pointer-events: none; transition: 0.3s; }
@@ -252,7 +233,8 @@
         <h2>CYBER VAULT 🔐</h2>
         <p style="font-size: 0.8rem; color: var(--neon-blue); margin-bottom: 12px;">أدخل كود الاشتراك أو الـ ID السري</p>
         <input type="password" id="pass-input" placeholder="أدخل الـ ID هنا..." autocomplete="off">
-        <button class="cyber-btn" onclick="checkLogin()">فك الشفرة والولوج 🚀</button>
+        <!-- التعديل هنا: الاتصال بالخادم -->
+        <button class="cyber-btn" onclick="checkLogin()">الاتصال بالخادم ⚡</button>
 
         <div class="contact-section">
             <div class="contact-title">للتواصل مع المالك لتفعيل الـ ID 💬</div>
@@ -289,7 +271,7 @@
     </div>
 </div>
 
-<!-- قائمة الألعاب الهولوغرامية -->
+<!-- قائمة الألعاب -->
 <div id="screen-lobby" class="app-overlay" style="display: none;">
     <div style="display: flex; justify-content: space-between; align-items: center; width: 88%; max-width: 600px; margin-top: 20px;">
         <h2 style="font-size: 1.3rem; color: #fff;">اختر المحاكي 🎮</h2>
@@ -300,7 +282,8 @@
     </div>
     <div class="carousel-controls">
         <button class="nav-btn" onclick="rotateCarousel(-1)">❮</button>
-        <button class="cyber-btn" style="width: 150px; padding: 12px;" onclick="launchSelectedGame()">تشغيل المحاكي 🚀</button>
+        <!-- التعديل هنا: الاتصال بالسيرفر -->
+        <button class="cyber-btn" style="width: 160px; padding: 12px;" onclick="launchSelectedGame()">الاتصال بالسيرفر 🚀</button>
         <button class="nav-btn" onclick="rotateCarousel(1)">❯</button>
     </div>
 </div>
@@ -436,7 +419,6 @@
         let currentGame = gamesList[currentCardIndex];
         if (!deductAttempt()) return;
 
-        // تطبيق تأثير الانتقال الكمومي المبهر
         let lobby = document.getElementById('screen-lobby');
         lobby.classList.add('quantum-effect');
 
@@ -447,13 +429,13 @@
                 renderGameBoard(currentGame.id);
                 showScreen('screen-game-container');
             });
-        }, 350);
+        }, 300);
     }
 
     function triggerRadarLoading(callback) {
         showScreen('screen-radar');
         let statusText = document.getElementById('radar-status-text');
-        let steps = ["فك تشفير عقد السيرفر...", "حقن الخوارزميات الحية...", "تثبيت مصفوفة البيانات...", "تم التحميل بنجاح!"];
+        let steps = ["جاري الاتصال بسيرفر الخوارزميات...", "تأكيد بصمة الـ ID...", "جاري تحميل بيانات الألعاب...", "تم الاتصال بنجاح!"];
         let idx = 0;
         let interval = setInterval(() => {
             if(idx < steps.length) { statusText.innerText = steps[idx]; idx++; }
@@ -467,7 +449,6 @@
         if (target) target.style.display = 'flex';
     }
 
-    // منطق الألعاب
     function renderGameBoard(gameId) {
         const area = document.getElementById('game-board-area');
         area.innerHTML = "";
