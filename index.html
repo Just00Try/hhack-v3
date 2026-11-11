@@ -36,6 +36,7 @@
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             background: rgba(3, 7, 18, 0.85);
             padding: 15px;
+            overflow-y: auto;
         }
 
         .cyber-ticker {
@@ -50,24 +51,23 @@
 
         .login-card {
             background: rgba(15, 23, 42, 0.95);
-            width: 100%; max-width: 360px; padding: 22px 18px;
+            width: 100%; max-width: 360px; padding: 18px 15px;
             border-radius: 20px; border: 2px solid var(--neon-blue);
             box-shadow: 0 0 25px rgba(0, 240, 255, 0.25); text-align: center;
-            position: relative; z-index: 20;
+            position: relative; z-index: 20; margin: auto;
         }
         .login-card h2 {
-            font-size: 1.2rem; letter-spacing: 1px;
-            color: var(--neon-blue); margin-bottom: 8px; font-weight: 900;
+            font-size: 1.15rem; letter-spacing: 1px;
+            color: var(--neon-blue); margin-bottom: 6px; font-weight: 900;
         }
 
-        /* تنسيق مربعات الاختيار الجديدة */
         .type-selector {
-            display: flex; gap: 8px; margin: 10px 0;
+            display: flex; gap: 8px; margin: 8px 0;
         }
         .type-option {
-            flex: 1; padding: 9px 5px; background: rgba(3, 7, 18, 0.9);
+            flex: 1; padding: 8px 5px; background: rgba(3, 7, 18, 0.9);
             border: 1px solid var(--neon-blue); border-radius: 8px;
-            color: #aaa; font-size: 0.8rem; cursor: pointer; font-weight: bold;
+            color: #aaa; font-size: 0.78rem; cursor: pointer; font-weight: bold;
             transition: 0.2s;
         }
         .type-option.selected {
@@ -80,53 +80,84 @@
         .rules-box {
             background: rgba(0, 240, 255, 0.04);
             border: 1px dashed var(--neon-blue);
-            border-radius: 8px; padding: 8px; margin-bottom: 10px;
-            font-size: 0.73rem; color: #cbd5e1; text-align: right; line-height: 1.4;
+            border-radius: 8px; padding: 7px; margin-bottom: 8px;
+            font-size: 0.7rem; color: #cbd5e1; text-align: right; line-height: 1.35;
         }
 
         input {
-            width: 100%; padding: 11px; margin: 8px 0;
+            width: 100%; padding: 10px; margin: 6px 0;
             border-radius: 10px; border: 1px solid var(--neon-blue);
             background: rgba(3, 7, 18, 0.9); color: var(--neon-blue);
-            text-align: center; font-size: 0.95rem; outline: none;
+            text-align: center; font-size: 0.9rem; outline: none;
         }
         input:focus { border-color: var(--neon-green); box-shadow: 0 0 15px var(--neon-green); }
 
         .cyber-btn {
-            width: 100%; padding: 11px; border-radius: 10px; border: none;
+            width: 100%; padding: 10px; border-radius: 10px; border: none;
             background: linear-gradient(90deg, var(--neon-blue), #0066ff);
-            color: #fff; font-weight: bold; font-size: 0.9rem; cursor: pointer;
-            box-shadow: 0 0 15px rgba(0, 240, 255, 0.3); margin-top: 5px;
+            color: #fff; font-weight: bold; font-size: 0.85rem; cursor: pointer;
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.3); margin-top: 4px;
         }
         .cyber-btn:active { transform: scale(0.98); }
 
         .contact-section {
-            margin-top: 14px; padding-top: 10px;
+            margin-top: 10px; padding-top: 8px;
             border-top: 1px solid rgba(0, 240, 255, 0.2);
         }
-        .contact-title { font-size: 0.75rem; color: #aaa; margin-bottom: 8px; }
+        .contact-title { font-size: 0.72rem; color: #aaa; margin-bottom: 6px; }
         .social-logos { display: flex; justify-content: center; align-items: center; }
         .logo-item {
-            width: 38px; height: 38px; border-radius: 50%;
+            width: 34px; height: 34px; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
-            text-decoration: none; font-size: 1.1rem;
+            text-decoration: none; font-size: 1rem;
             background: rgba(24, 119, 242, 0.15);
             border: 1.5px solid #1877F2; color: #1877F2;
         }
 
-        /* بقية التنسيقات للشاشات والالعاب */
-        .carousel-container { width: 100%; height: 300px; position: relative; display: flex; justify-content: center; align-items: center; margin-top: 10px; }
-        .carousel-wheel { width: 220px; height: 280px; position: relative; }
+        .investors-footer {
+            margin-top: 12px; padding-top: 8px;
+            border-top: 1px dashed rgba(0, 240, 255, 0.25);
+            text-align: center;
+        }
+        .investors-title {
+            font-size: 0.65rem; color: #64748b; letter-spacing: 1px;
+            margin-bottom: 6px; text-transform: uppercase; font-weight: bold;
+        }
+        .investors-grid {
+            display: flex; justify-content: center; align-items: center;
+            gap: 12px; opacity: 0.65; filter: grayscale(30%);
+        }
+        .investor-badge {
+            font-family: monospace; font-size: 0.62rem; font-weight: bold;
+            color: #94a3b8; border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 3px 6px; border-radius: 4px; background: rgba(0,0,0,0.3);
+            display: flex; align-items: center; gap: 3px;
+        }
+        .investor-badge i { color: var(--neon-blue); font-size: 0.6rem; }
+
+        .carousel-container { width: 100%; height: 240px; position: relative; display: flex; justify-content: center; align-items: center; margin-top: 2px; }
+        .carousel-wheel { width: 190px; height: 220px; position: relative; }
         .carousel-card {
             position: absolute; inset: 0; border-radius: 18px; background: rgba(15, 23, 42, 0.95);
             border: 2px solid var(--neon-blue); display: flex; flex-direction: column; justify-content: center; align-items: center;
-            padding: 15px; gap: 10px; cursor: pointer; opacity: 0; transform: scale(0.85); transition: all 0.25s ease-out; pointer-events: none;
+            padding: 10px; gap: 6px; cursor: pointer; opacity: 0; transform: scale(0.85); transition: all 0.25s ease-out; pointer-events: none;
         }
         .carousel-card.active { opacity: 1; transform: scale(1); pointer-events: auto; border-color: var(--neon-green); box-shadow: 0 0 25px rgba(0, 255, 102, 0.3); }
-        .game-icon-large { font-size: 3.5rem; }
-        .game-title-large { font-size: 1.1rem; font-weight: bold; color: #fff; }
-        .carousel-controls { display: flex; gap: 12px; margin-top: 5px; align-items: center; }
-        .nav-btn { width: 42px; height: 42px; border-radius: 50%; border: 2px solid var(--neon-blue); background: rgba(10, 15, 30, 0.9); color: var(--neon-blue); font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .game-icon-large { font-size: 2.5rem; }
+        .game-title-large { font-size: 0.95rem; font-weight: bold; color: #fff; }
+        .carousel-controls { display: flex; gap: 10px; margin-top: 0px; align-items: center; }
+        .nav-btn { width: 35px; height: 35px; border-radius: 50%; border: 2px solid var(--neon-blue); background: rgba(10, 15, 30, 0.9); color: var(--neon-blue); font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+
+        .live-matrix-feed {
+            width: 88%; max-width: 500px;
+            background: rgba(0, 240, 255, 0.05);
+            border: 1px solid var(--neon-blue);
+            border-radius: 8px; padding: 5px 10px;
+            margin: 3px auto 0 auto;
+            text-align: center; font-size: 0.7rem;
+            color: var(--neon-green); font-family: monospace;
+            box-shadow: inset 0 0 8px rgba(0, 240, 255, 0.1);
+        }
 
         .radar-box { width: 80px; height: 80px; border-radius: 50%; border: 2px solid var(--neon-blue); position: relative; margin-bottom: 12px; overflow: hidden; background: radial-gradient(circle, rgba(0,240,255,0.1) 0%, transparent 70%); }
         .radar-box::after { content: ''; position: absolute; top: 50%; left: 50%; width: 50%; height: 50%; background: linear-gradient(45deg, var(--neon-blue), transparent); transform-origin: 0 0; animation: radarSweep 1.2s linear infinite; }
@@ -171,33 +202,41 @@
     <span>⚡ [ CYBER MATRIX VIP SYSTEM ONLINE ] &nbsp;&bull;&nbsp; [ القسائم اليومية: 3 قسائم متاحة الآن 🟢 ]</span>
 </div>
 
-<!-- شاشة تسجيل الدخول المحدثة -->
+<!-- شاشة تسجيل الدخول -->
 <div id="screen-login" class="app-overlay">
     <div class="login-card">
         <h2>CYBER ACCESS 🔐</h2>
         
-        <!-- اختيار نوع اللاعب -->
         <div class="type-selector">
             <div id="opt-new" class="type-option selected" onclick="selectUserType('new')">👤 لاعب جديد</div>
-            <div id="opt-registered" class="type-option" onclick="selectUserType('registered')">⭐ لاعب مسجل</div>
+            <div id="opt-registered" class="type-option" onclick="selectUserType('registered')">⭐ لاعب حالي</div>
         </div>
 
-        <!-- صندوق الشروط المتغير حسب الاختيار -->
         <div id="rules-text" class="rules-box">
-            💡 <b>تفعيل أول مرة:</b> شحن حسابك بـ <b>200 جنيه</b> لتفعيل الـ ID والحصول على محاولاتك الأولى.
+            💡 <b>لاعب جديد:</b> اكتب الـ ID الخاص بك لطلب التفعيل (تفعيل أول مرة بشحن 200 جنيه).
         </div>
 
-        <input type="password" id="pass-input" placeholder="أدخل رقم الـ ID هنا..." autocomplete="off">
-        <button class="cyber-btn" onclick="checkLogin()">دخول النظام 🚀</button>
+        <input type="password" id="pass-input" placeholder="أدخل الـ ID الخاص بك هنا..." autocomplete="off">
+        <button id="submit-btn" class="cyber-btn" onclick="handleAuthAction()">طلب تفعيل النظام ⚡</button>
 
         <div class="contact-section">
-            <div class="contact-title">للتفعيل أو التواصل مع المالك عبر فيسبوك 💬</div>
+            <div class="contact-title">للتواصل مع المالك عبر فيسبوك 💬</div>
             <div class="social-logos">
                 <a href="https://www.facebook.com/share/1CBdhvQwsS/" target="_blank" class="logo-item" title="فيسبوك">
                     <i class="fab fa-facebook-f"></i>
                 </a>
             </div>
         </div>
+
+        <div class="investors-footer">
+            <div class="investors-title">Certified Partners & Investors</div>
+            <div class="investors-grid">
+                <div class="investor-badge"><i class="fas fa-microchip"></i> CYBER DYNAMICS</div>
+                <div class="investor-badge"><i class="fas fa-shield-alt"></i> MATRIX SECURE</div>
+                <div class="investor-badge"><i class="fas fa-chart-line"></i> APEX CAPITAL</div>
+            </div>
+        </div>
+
     </div>
 </div>
 
@@ -209,8 +248,8 @@
             <p style="font-size: 0.72rem; color: var(--neon-blue);">تفعيل أو تنشيط ID للعميل:</p>
             <input type="text" id="new-client-id" placeholder="رقم الـ ID" style="padding: 5px; margin: 3px 0; font-size:0.8rem;">
             <select id="new-client-attempts" style="width: 100%; padding: 5px; border-radius: 6px; background: #000; color: #fff; border: 1px solid var(--neon-blue); margin-bottom: 4px; font-size:0.8rem;">
-                <option value="1" selected>1 محاولة (تنشيط يومي / شحن جديد)</option>
-                <option value="3">3 محاولات (باقة خاصة)</option>
+                <option value="1" selected>1 محاولة (تنشيط يومي)</option>
+                <option value="3">3 محاولات (خاص)</option>
             </select>
             <button class="cyber-btn" onclick="addClientId()" style="padding: 6px; font-size:0.8rem; margin-top:2px;">حفظ وتفعيل الـ ID ⚡</button>
         </div>
@@ -226,17 +265,43 @@
 
 <!-- قائمة الألعاب -->
 <div id="screen-lobby" class="app-overlay" style="display: none;">
-    <div style="display: flex; justify-content: space-between; align-items: center; width: 88%; max-width: 600px; margin-top: 15px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; width: 88%; max-width: 500px; margin-top: 5px;">
         <h2 style="font-size: 1.1rem; color: #fff;">اختر اللعبة 🎮</h2>
         <div id="global-attempts-hud" class="attempts-hud">🎮 المحاولات: 1</div>
     </div>
+    
+    <div class="live-matrix-feed" id="matrix-feed-text">
+        ⚡ جاري فحص خوارزميات السيرفر الحية...
+    </div>
+
     <div class="carousel-container">
         <div class="carousel-wheel" id="carousel-wheel"></div>
     </div>
+    
+    <!-- زر الإحالة الجديد المضاف بذكاء -->
+    <div style="width: 88%; max-width: 500px; margin: 2px 0;">
+        <button class="cyber-btn" style="background: linear-gradient(90deg, #ff0055, #ff5500); font-size: 0.78rem; padding: 8px;" onclick="openReferralModal()">🎁 شارك وادخل ببلاش (خد محاولات هدية)</button>
+    </div>
+
     <div class="carousel-controls">
         <button class="nav-btn" onclick="rotateCarousel(-1)">❮</button>
-        <button class="cyber-btn" style="width: 130px; padding:9px; margin:0;" onclick="launchSelectedGame()">تشغيل اللعبة 🚀</button>
+        <button class="cyber-btn" style="width: 110px; padding:7px; margin:0;" onclick="launchSelectedGame()">تشغيل 🚀</button>
         <button class="nav-btn" onclick="rotateCarousel(1)">❯</button>
+    </div>
+</div>
+
+<!-- نافذة الإحالة المنبثقة (Modal) -->
+<div id="screen-referral" class="app-overlay" style="display: none;">
+    <div class="login-card">
+        <h2 style="color: var(--neon-green);">برنامج الإحالة VIP 🎁</h2>
+        <p style="font-size: 0.75rem; color: #ccc; margin-bottom: 10px; line-height: 1.4;">
+            انشر رابطك الخاص مع أصدقائك في جروبات التليجرام والمراهنات. كل صاحب يسجل بالـ ID الخاص بك، تواصل معنا وخد <b>محاولات مجانية هدية</b>!
+        </p>
+        <div style="background: rgba(0,240,255,0.05); border: 1px dashed var(--neon-blue); padding: 8px; border-radius: 8px; margin-bottom: 10px; font-family: monospace; font-size: 0.75rem; color: var(--neon-blue); word-break: break-all;" id="ref-link-box">
+            جاري توليد الرابط...
+        </div>
+        <button class="cyber-btn" onclick="copyReferralLink()" style="margin-bottom: 5px;">📋 نسخ الرابط السريع</button>
+        <button class="cyber-btn" style="background: #333;" onclick="showScreen('screen-lobby')">⬅ عودة للألعاب</button>
     </div>
 </div>
 
@@ -257,26 +322,28 @@
 </div>
 
 <script>
-    // نظام تبديل نوع اللاعب
     let userMode = 'new'; // 'new' أو 'registered'
+
     function selectUserType(type) {
         userMode = type;
         let optNew = document.getElementById('opt-new');
         let optReg = document.getElementById('opt-registered');
         let rulesBox = document.getElementById('rules-text');
+        let submitBtn = document.getElementById('submit-btn');
 
         if(type === 'new') {
             optNew.classList.add('selected');
             optReg.classList.remove('selected');
-            rulesBox.innerHTML = `💡 <b>لاعب جديد:</b> شحن حسابك بـ <b>200 جنيه</b> لتفعيل الـ ID لأول مرة والحصول على المحاولات.`;
+            rulesBox.innerHTML = `💡 <b>لاعب جديد:</b> اكتب الـ ID الخاص بك لطلب التفعيل (تفعيل أول مرة بشحن 200 جنيه).`;
+            submitBtn.innerText = "طلب تفعيل النظام ⚡";
         } else {
             optReg.classList.add('selected');
             optNew.classList.remove('selected');
-            rulesBox.innerHTML = `⭐ <b>لاعب مسجل:</b> قم بعمل إيداع اليوم (بأي مبلغ حتى لو <b>20 جنيه</b>) واطلب تنشيط الـ ID للحصول على محاولتك اليومية!`;
+            rulesBox.innerHTML = `⭐ <b>لاعب حالي:</b> أدخل الـ ID الخاص بك للتنشيط اليومي (إيداع أي مبلغ حتى لو 20 ج).`;
+            submitBtn.innerText = "تنشيط جلسة اليوم 🔄";
         }
     }
 
-    // --- قاعدة البيانات والتحقق ---
     const MASTER_KEY = "VIP_CYBER_MASTER_DB";
     function getDB() {
         let db = localStorage.getItem(MASTER_KEY);
@@ -286,26 +353,41 @@
     function saveDB(data) { localStorage.setItem(MASTER_KEY, JSON.stringify(data)); }
     let activeClientId = null;
 
-    function checkLogin() {
+    function handleAuthAction() {
         let val = document.getElementById('pass-input').value.trim();
-        if(!val) return alert("يرجى إدخال رقم الـ ID الخاص بك!");
+        if(!val) return alert("يرجى إدخال الـ ID الخاص بك أولاً!");
         if(val === "Walhyma3rf") { renderAdminTable(); showScreen('screen-admin'); return; }
-        
+
         let db = getDB();
+
         if(db.ids[val]) {
             if(db.ids[val].attempts <= 0) {
-                return alert("عذراً! انتهت محاولاتك. قم بعمل إيداع اليوم (حتى لو بـ 20 ج) وتواصل معنا عبر فيسبوك لتنشيط الـ ID!");
+                return alert("⚠️ تنبيه النظام: نفدت محاولات هذا الـ ID. يرجى إرسال إيداع التنشيط وتحديث الجلسة عبر فيسبوك!");
             }
             activeClientId = val;
             updateAttemptsHUD();
             triggerRadarLoading(() => { showScreen('screen-lobby'); });
         } else {
             if(userMode === 'new') {
-                alert("هذا الـ ID غير مفعل. تواصل معنا عبر فيسبوك لتأكيد إيداع الـ 200 جنيه وتفعيل حسابك لأول مرة!");
+                alert(`🚨 تم تقديم طلب التفعيل للـ ID: (${val}) بنجاح.\n\nمن فضلك تواصل معنا الآن عبر زر فيسبوك لإتمام إيداع التفعيل (200 جنيه) ليقوم السيرفر بفتح الصلاحية لك فورا!`);
             } else {
-                alert("هذا الـ ID غير مسجل أو لم يتم تنشيطه اليوم. تواصل معنا عبر فيسبوك لتأكيد الإيداع (20 ج) والحصول على المحاولة!");
+                alert(`🔄 تم تقديم طلب التنشيط اليومي للـ ID: (${val}).\n\nمن فضلك تواصل معنا عبر فيسبوك لتأكيد إيداع التنشيط (حتى لو 20 جنيه) للحصول على محاولتك!`);
             }
         }
+    }
+
+    function openReferralModal() {
+        showScreen('screen-referral');
+        let currentUrl = window.location.href.split('?')[0];
+        let refLink = activeClientId ? `${currentUrl}?ref=${activeClientId}` : `${currentUrl}?ref=VIP_GUEST`;
+        document.getElementById('ref-link-box').innerText = refLink;
+    }
+
+    function copyReferralLink() {
+        let linkText = document.getElementById('ref-link-box').innerText;
+        navigator.clipboard.writeText(linkText).then(() => {
+            alert("✅ تم نسخ رابط الدعوة بنجاح! انشره الآن وأبلغنا بالعملاء الجدد لزيادة محاولاتك.");
+        });
     }
 
     function deductAttempt() {
@@ -318,7 +400,7 @@
                 updateAttemptsHUD();
                 return true;
             } else {
-                alert("نفدت محاولتك اليومية! قم بعمل إيداع جديد وتواصل معنا للتنشيط.");
+                alert("انتهت محاولتك اليومية! قم بعمل إيداع التنشيط وتواصل معنا.");
                 showScreen('screen-lobby');
                 return false;
             }
@@ -335,7 +417,7 @@
         saveDB(db);
         document.getElementById('new-client-id').value = "";
         renderAdminTable();
-        alert(`تم تفعيل/تنشيط الـ ID (${idVal}) بـ ${attemptsVal} محاولة بنجاح!`);
+        alert(`تم تفعيل الـ ID (${idVal}) بنجاح!`);
     }
 
     function renderAdminTable() {
@@ -364,7 +446,30 @@
         document.getElementById('game-attempts-hud').innerText = `🎮 ${att}`;
     }
 
-    // --- قائمة الألعاب والأكواد كما هي ---
+    const gamesNames = ["Apple 🍎", "Gems & Mines 💎", "Royal Feast 🍗", "Wild West Gold ⛏️"];
+    
+    function generateRandomFeed() {
+        let randomId = "ID_#" + Math.floor(1000 + Math.random() * 9000);
+        let randomMoney = Math.floor(300 + Math.random() * 2200) + " ج";
+        let randomGame = gamesNames[Math.floor(Math.random() * gamesNames.length)];
+        let accuracy = Math.floor(90 + Math.random() * 9) + "%";
+
+        const feedTemplates = [
+            `⚡ [نشاط حقيقي]: المستخدم (${randomId}) حقق مكسب ${randomMoney} من لعبة (${randomGame}).`,
+            `🔥 [تنبيه ثغرة]: تم رصد استقرار في خوارزميات لعبة (${randomGame}) بنسبة نجاح ${accuracy}.`,
+            `🟢 [تنشيط جديد]: تم تفعيل حساب جديد للـ (${randomId}) بنجاح الآن.`,
+            `⚠️ [ضغط السيرفر]: متبقي أماكن محدودة لجلسات التنشيط اليومية بشهادة (${accuracy}).`
+        ];
+
+        let selectedText = feedTemplates[Math.floor(Math.random() * feedTemplates.length)];
+        let feedElement = document.getElementById('matrix-feed-text');
+        if(feedElement) {
+            feedElement.innerText = selectedText;
+        }
+    }
+
+    setInterval(generateRandomFeed, 3500);
+
     const gamesList = [
         { id: 'apple', title: 'Apple 🍎', icon: '🍎' },
         { id: 'gems', title: 'Gems & Mines 💎', icon: '💎' },
@@ -406,7 +511,7 @@
     function triggerRadarLoading(callback) {
         showScreen('screen-radar');
         let statusText = document.getElementById('radar-status-text');
-        let steps = ["جاري الربط مع السيرفر...", "فحص حالة الإيداع...", "تأكيد التنشيط اليومي...", "تم الاستخراج بنجاح!"];
+        let steps = ["جاري الاتصال بالسيرفر...", "فحص تشفير الإيداع...", "التحقق من التنشيط اليومي...", "تمت المصادقة بنجاح!"];
         let idx = 0;
         let interval = setInterval(() => {
             if(idx < steps.length) { statusText.innerText = steps[idx]; idx++; }
@@ -420,7 +525,6 @@
         if (targetScreen) targetScreen.style.display = 'flex';
     }
 
-    // منطق الألعاب
     function renderGameBoard(gameId) {
         const area = document.getElementById('game-board-area');
         area.innerHTML = "";
